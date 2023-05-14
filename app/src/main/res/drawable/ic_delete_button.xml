@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="20dp"
+    android:height="23dp"
+    android:viewportWidth="22"
+    android:viewportHeight="26">
+    <path
+        android:pathData="M2.76929 5.03845L3.87506 22.7308C3.92758 23.753 4.67121 24.5 5.64429 24.5H15.8174C16.7943 24.5 17.5241 23.753 17.5866 22.7308L18.6924 5.03845"
+        android:strokeWidth="2"
+        android:strokeColor="@color/delete_icon_color"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M1 5.03845H20.4615"
+        android:strokeWidth="2"
+        android:strokeColor="@color/delete_icon_color"
+        android:strokeLineCap="square"
+        android:strokeMiterLimit="10" />
+    <path
+        android:pathData="M14.7115 8.57693L14.2692 20.9615M7.19231 5.03847V2.82693C7.1918 2.65253 7.22577 2.47975 7.29227 2.31853C7.35878 2.15731 7.4565 2.01083 7.57982 1.88751C7.70313 1.7642 7.84961 1.66647 8.01083 1.59997C8.17206 1.53347 8.34483 1.49949 8.51923 1.50001H12.9423C13.1167 1.49949 13.2895 1.53347 13.4507 1.59997C13.6119 1.66647 13.7584 1.7642 13.8817 1.88751C14.005 2.01083 14.1028 2.15731 14.1693 2.31853C14.2358 2.47975 14.2697 2.65253 14.2692 2.82693V5.03847H7.19231ZM10.7308 8.57693V20.9615V8.57693ZM6.75 8.57693L7.19231 20.9615L6.75 8.57693Z"
+        android:strokeWidth="2"
+        android:strokeColor="@color/delete_icon_color"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+</vector>

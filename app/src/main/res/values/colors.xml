@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="text_color">#FAFAFA</color>
+    <color name="icons_color">#FAFAFA</color>
+    <color name="background_color">#FAFAFA</color>
+    <color name="contacts_background_color">#242235</color>
+    <color name="delete_icon_color">#FB5E06</color>
+    <color name="up_button_icon_color">#FB5E06</color>
+    <color name="name_text_color">#18181F</color>
+    <color name="career_text_color">#828282</color>
+    <color name="profile_stroke_color">#B2B2B3</color>
+</resources>

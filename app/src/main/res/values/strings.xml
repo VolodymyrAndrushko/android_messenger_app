@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Task2</string>
+    <string name="contacts">Contacts</string>
+    <string name="add_contacts">Add contacts</string>
+    <string name="full_name">Full name</string>
+    <string name="career">Career</string>
+</resources>
