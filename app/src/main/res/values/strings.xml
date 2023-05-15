@@ -4,4 +4,9 @@
     <string name="add_contacts">Add contacts</string>
     <string name="full_name">Full name</string>
     <string name="career">Career</string>
+    <string name="profile_photo">Profile photo</string>
+    <string name="delete_icon">Delete Icon</string>
+    <string name="back_arrow_navigation">Back arrow navigation</string>
+    <string name="find_button">Find button</string>
+    <string name="navigation_up_button">Navigation up button</string>
 </resources>
