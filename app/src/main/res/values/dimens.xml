@@ -20,4 +20,5 @@
     <dimen name="margin_36">36dp</dimen>
     <dimen name="margin_137">137dp</dimen>
     <dimen name="margin_117">117dp</dimen>
+    <dimen name="padding_36">36dp</dimen>
 </resources>

@@ -102,7 +102,7 @@
             android:src="@drawable/ic_button_up"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="gone"
+            android:visibility="invisible"
             android:layout_marginTop="@dimen/margin_36"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
