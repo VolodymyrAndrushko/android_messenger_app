@@ -21,4 +21,26 @@
     <dimen name="margin_137">137dp</dimen>
     <dimen name="margin_117">117dp</dimen>
     <dimen name="padding_36">36dp</dimen>
+    <dimen name="layout_padding">16dp</dimen>
+    <dimen name="underline_size">1dp</dimen>
+    <dimen name="button_border_size">2dp</dimen>
+    <dimen name="border_radius">6dp</dimen>
+
+    <dimen name="text_medium_large">18sp</dimen>
+    <dimen name="or_text_size">18sp</dimen>
+    <dimen name="google_text_size">16sp</dimen>
+    <dimen name="button_text_size">16sp</dimen>
+    <dimen name="margin_large">24dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="padding_google_btn">10dp</dimen>
+    <dimen name="padding_medium">16dp</dimen>
+    <dimen name="padding_register_btn">18dp</dimen>
+    <dimen name="padding_semi_small">12dp</dimen>
+    <dimen name="icon_size">60dp</dimen>
+    <dimen name="margin_very_large">32dp</dimen>
+    <dimen name="margin_12">12dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="margin_67">67dp</dimen>
+    <dimen name="margin_146">146dp</dimen>
 </resources>

@@ -3,6 +3,17 @@
     <style name="Base.Theme.Task2" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="googleButtonStyle">@style/DefaultGoogleButtonStyle</item>
+    </style>
+
+    <style name="DefaultGoogleButtonStyle">
+        <item name="buttonColor">#FAFAFA</item>
+        <item name="buttonText">@string/GOOGLE</item>
+        <item name="buttonTextColor">#18181F</item>
+        <item name="buttonCornerRadius">@dimen/border_radius</item>
+        <item name="buttonTextFont">@font/open_sans</item>
+        <item name="buttonTextFontWeight">600</item>
+        <item name="buttonTextFontSize">@dimen/google_text_size</item>
     </style>
 
     <style name="Theme.Task2" parent="Base.Theme.Task2" />
