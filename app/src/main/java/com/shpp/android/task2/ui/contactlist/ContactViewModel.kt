@@ -1,10 +1,10 @@
-package com.shpp.android.task2.viewModels
+package com.shpp.android.task2.ui.contactlist
 
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.shpp.android.task2.models.Contact
+import com.shpp.android.task2.domain.dataclass.Contact
 import com.shpp.android.task2.data.LocalRepositoryData
 
 class ContactViewModel : ViewModel() {

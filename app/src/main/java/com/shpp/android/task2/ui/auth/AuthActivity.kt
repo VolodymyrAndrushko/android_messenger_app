@@ -1,7 +1,6 @@
-package com.shpp.android.task2.activities
+package com.shpp.android.task2.ui.auth
 
 import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils

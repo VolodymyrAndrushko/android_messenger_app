@@ -1,4 +1,4 @@
-package com.shpp.android.task2.activities
+package com.shpp.android.task2.ui.utils
 
 import android.content.Context
 import android.content.res.TypedArray
@@ -14,6 +14,7 @@ import android.text.style.TypefaceSpan
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
+import androidx.appcompat.widget.AppCompatButton
 import com.example.task2.R
 import java.lang.Exception
 import kotlin.properties.Delegates
@@ -29,7 +30,7 @@ class GoogleButtonView @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = R.attr.googleButtonStyle
-) : androidx.appcompat.widget.AppCompatButton(context, attributeSet, defStyleAttr) {
+) : AppCompatButton(context, attributeSet, defStyleAttr) {
 
     private val typedArray: TypedArray
     private var buttonBackGroundColor by Delegates.notNull<Int>()
@@ -143,6 +144,7 @@ class GoogleButtonView @JvmOverloads constructor(
     }
 
     override fun onDraw(canvas: Canvas) {
+
         val buttonContentWidth = width - paddingLeft - paddingRight
 
         val method = transformationMethod

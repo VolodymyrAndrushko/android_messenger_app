@@ -1,7 +1,7 @@
-package com.shpp.android.task2.diff
+package com.shpp.android.task2.ui.contactlist.adapters.diff
 
 import androidx.recyclerview.widget.DiffUtil
-import com.shpp.android.task2.models.Contact
+import com.shpp.android.task2.domain.dataclass.Contact
 
 class ContactDiffCallback(
     private val oldList: List<Contact>,

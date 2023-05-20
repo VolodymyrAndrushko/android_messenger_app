@@ -1,4 +1,4 @@
-package com.shpp.android.task2.fragments
+package com.shpp.android.task2.ui.contactlist.fragments
 
 import android.app.AlertDialog
 import android.app.Dialog

@@ -1,4 +1,4 @@
-package com.shpp.android.task2.adapters
+package com.shpp.android.task2.ui.contactlist.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -13,8 +13,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import com.example.task2.R
-import com.shpp.android.task2.diff.ContactDiffCallback
-import com.shpp.android.task2.models.Contact
+import com.shpp.android.task2.domain.dataclass.Contact
+import com.shpp.android.task2.domain.repository.IContactsRecyclerViewAdapter
+import com.shpp.android.task2.ui.contactlist.adapters.diff.ContactDiffCallback
 
 
 class ContactsRecyclerViewAdapter(
@@ -51,10 +52,14 @@ class ContactsRecyclerViewAdapter(
         val localDrawable = R.drawable.ic_profile_default_photo
         holder.fullNameTV.text = currentContact.fullName
         holder.careerTV.text = currentContact.career
-        Glide.with(context).load(currentContact.image).apply(
-            RequestOptions().centerCrop().transform(CircleCrop()).placeholder(localDrawable)
-                .error(localDrawable).diskCacheStrategy(DiskCacheStrategy.ALL)
-        ).into(holder.profilePhotoIV)
+        Glide
+            .with(context)
+            .load(currentContact.image)
+            .apply(
+                RequestOptions().centerCrop().transform(CircleCrop()).placeholder(localDrawable)
+                    .error(localDrawable).diskCacheStrategy(DiskCacheStrategy.ALL)
+            )
+            .into(holder.profilePhotoIV)
     }
 
     fun updateList(newList: List<Contact>) {
@@ -63,8 +68,4 @@ class ContactsRecyclerViewAdapter(
         contactsList.addAll(newList)
         diffResult.dispatchUpdatesTo(this)
     }
-}
-
-interface IContactsRecyclerViewAdapter {
-    fun onItemClicked(contact: Contact, position: Int)
 }

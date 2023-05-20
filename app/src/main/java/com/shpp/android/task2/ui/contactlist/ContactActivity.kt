@@ -1,21 +1,19 @@
-package com.shpp.android.task2.activities
+package com.shpp.android.task2.ui.contactlist
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewPropertyAnimator
-import androidx.lifecycle.Observer
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task2.databinding.ActivityContactBinding
 import com.google.android.material.snackbar.Snackbar
-import com.shpp.android.task2.adapters.ContactsRecyclerViewAdapter
-import com.shpp.android.task2.adapters.IContactsRecyclerViewAdapter
-import com.shpp.android.task2.fragments.ContactAddFragmentDialog
-import com.shpp.android.task2.models.Contact
-import com.shpp.android.task2.viewModels.ContactViewModel
+import com.shpp.android.task2.domain.dataclass.Contact
+import com.shpp.android.task2.domain.repository.IContactsRecyclerViewAdapter
+import com.shpp.android.task2.ui.contactlist.adapters.ContactsRecyclerViewAdapter
+import com.shpp.android.task2.ui.contactlist.fragments.ContactAddFragmentDialog
 
 class ContactActivity : AppCompatActivity(), IContactsRecyclerViewAdapter {
     private lateinit var binding: ActivityContactBinding
@@ -29,9 +27,40 @@ class ContactActivity : AppCompatActivity(), IContactsRecyclerViewAdapter {
         setRecyclerView()
     }
 
-    private fun setTouchRecycleItemListener() {
-        val itemTouchCallback = setTouchCallBackListener()
-        ItemTouchHelper(itemTouchCallback).attachToRecyclerView(binding.recyclerViewContacts)
+    private fun setEventListeners() {
+        setNavigationUpListeners()
+        setAddContactButtonListener()
+//        setNavigationBackListener()
+//        setFindListener()
+    }
+
+    private fun setNavigationUpListeners() {
+        binding.navigationUp.viewTreeObserver.addOnScrollChangedListener {
+            checkForDisplayUpNavigationButton()
+        }
+        binding.navigationUp.setOnClickListener {
+            binding.scrollViewLayout.smoothScrollTo(0, 0)
+        }
+    }
+
+    private fun setAddContactButtonListener() {
+        binding.addContacts.setOnClickListener {
+
+            val dialogFragment = ContactAddFragmentDialog()
+
+            dialogFragment.setPositiveButtonClickListener(object : ContactAddFragmentDialog(),
+                    (String, String) -> Unit {
+                override fun invoke(fullName: String, career: String) {
+                    viewModel.addContact(Contact(fullName, career))
+                }
+            })
+
+            dialogFragment.show(
+                supportFragmentManager,
+                "contacts_add_fragment_dialog"
+            ) // TODO string literal to const value
+
+        }
     }
 
     private fun setRecyclerView() {
@@ -41,15 +70,18 @@ class ContactActivity : AppCompatActivity(), IContactsRecyclerViewAdapter {
         binding.recyclerViewContacts.isNestedScrollingEnabled = true
         binding.recyclerViewContacts.adapter = adapter
 
-        viewModel = ViewModelProvider(
-            this
-        )[ContactViewModel::class.java]
+        viewModel = ViewModelProvider(this)[ContactViewModel::class.java]
 
-        viewModel.contactsList.observe(this, Observer { list ->
+        viewModel.contactsList.observe(this) { list ->
             list?.let {
                 adapter.updateList(it)
             }
-        })
+        }
+    }
+
+    private fun setTouchRecycleItemListener() {
+        val itemTouchCallback = setTouchCallBackListener()
+        ItemTouchHelper(itemTouchCallback).attachToRecyclerView(binding.recyclerViewContacts)
     }
 
     private fun setTouchCallBackListener(): ItemTouchHelper.Callback {
@@ -71,29 +103,6 @@ class ContactActivity : AppCompatActivity(), IContactsRecyclerViewAdapter {
         }
     }
 
-    private fun setEventListeners() {
-        setNavigationUpListeners()
-        setAddContactButtonListener()
-//        setNavigationBackListener()
-//        setFindListener()
-    }
-
-    private fun setAddContactButtonListener() {
-        binding.addContacts.setOnClickListener {
-
-            val dialogFragment = ContactAddFragmentDialog()
-
-            dialogFragment.setPositiveButtonClickListener(object : ContactAddFragmentDialog(),
-                    (String, String) -> Unit {
-                override fun invoke(fullName: String, career: String) {
-                    viewModel.addContact(Contact(fullName, career))
-                }
-            })
-
-            dialogFragment.show(supportFragmentManager, "contacts_add_fragment_dialog")
-
-        }
-    }
 
     private fun setFindListener() {
         TODO("Not yet implemented")
@@ -103,14 +112,6 @@ class ContactActivity : AppCompatActivity(), IContactsRecyclerViewAdapter {
         TODO("Not yet implemented")
     }
 
-    private fun setNavigationUpListeners() {
-        binding.navigationUp.viewTreeObserver.addOnScrollChangedListener {
-            checkForDisplayUpNavigationButton()
-        }
-        binding.navigationUp.setOnClickListener {
-            binding.scrollViewLayout.smoothScrollTo(0, 0)
-        }
-    }
 
     private fun checkForDisplayUpNavigationButton() {
         val scrollY = binding.scrollViewLayout.scrollY
@@ -125,7 +126,7 @@ class ContactActivity : AppCompatActivity(), IContactsRecyclerViewAdapter {
         }
     }
 
-    override fun onItemClicked(contact: Contact, position: Int) {
+    override fun onItemClicked(contact: Contact, position: Int) { // TODO there is error on fast click many times on bin icon
         deleteItemWithRestore(contact, position)
     }
 
@@ -149,8 +150,8 @@ class ContactActivity : AppCompatActivity(), IContactsRecyclerViewAdapter {
             "Contact ${contact.fullName} deleted",
             Snackbar.LENGTH_LONG
         ).setAction("Restore ${contact.fullName}") {
-                viewModel.addContact(contact, position)
-            }.show()
+            viewModel.addContact(contact, position)
+        }.show()
         checkForDisplayUpNavigationButton()
     }
 }
