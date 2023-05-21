@@ -1,4 +1,4 @@
-package com.shpp.android.task2.models
+package com.shpp.android.task2.domain.dataclass
 
 data class Contact(
      val fullName: String,
@@ -14,4 +14,7 @@ data class Contact(
      }
 
      val id: Int = getNextId()
+     override fun toString(): String {
+          return "Contact: id: $id, Full name: $fullName, Career: $career, Image: $image"
+     }
 }

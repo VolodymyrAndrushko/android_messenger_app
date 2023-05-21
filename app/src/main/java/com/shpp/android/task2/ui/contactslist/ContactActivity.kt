@@ -1,4 +1,4 @@
-package com.shpp.android.task2.activities
+package com.shpp.android.task2.ui.contactslist
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,11 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task2.databinding.ActivityContactBinding
 import com.google.android.material.snackbar.Snackbar
-import com.shpp.android.task2.adapters.ContactsRecyclerViewAdapter
-import com.shpp.android.task2.adapters.IContactsRecyclerViewAdapter
-import com.shpp.android.task2.fragments.ContactAddFragmentDialog
-import com.shpp.android.task2.models.Contact
-import com.shpp.android.task2.viewModels.ContactViewModel
+import com.shpp.android.task2.ui.contactslist.adapters.ContactsRecyclerViewAdapter
+import com.shpp.android.task2.domain.repository.IContactsRecyclerViewAdapter
+import com.shpp.android.task2.ui.contactslist.fragments.ContactAddFragmentDialog
+import com.shpp.android.task2.domain.dataclass.Contact
+
+private const val ADD_CONTACT_FRAGMENT_TAG = "contacts_add_fragment_dialog"
 
 class ContactActivity : AppCompatActivity(), IContactsRecyclerViewAdapter {
     private lateinit var binding: ActivityContactBinding
@@ -29,22 +30,60 @@ class ContactActivity : AppCompatActivity(), IContactsRecyclerViewAdapter {
         setRecyclerView()
     }
 
-    private fun setTouchRecycleItemListener() {
-        val itemTouchCallback = setTouchCallBackListener()
-        ItemTouchHelper(itemTouchCallback).attachToRecyclerView(binding.recyclerViewContacts)
+    private fun setEventListeners() {
+        setNavigationUpListeners()
+        setAddContactButtonListener()
+    }
+
+    private fun setNavigationUpListeners() {
+        binding.navigationUp.viewTreeObserver.addOnScrollChangedListener {
+            checkForDisplayUpNavigationButton()
+        }
+        binding.navigationUp.setOnClickListener {
+            binding.scrollViewLayout.smoothScrollTo(0, 0)
+        }
+    }
+
+    private fun setAddContactButtonListener() {
+        binding.addContacts.setOnClickListener {
+            val dialogFragment = ContactAddFragmentDialog()
+            dialogFragment.setPositiveButtonClickListener(object : ContactAddFragmentDialog(),
+                    (String, String) -> Unit {
+                override fun invoke(fullName: String, career: String) {
+                    viewModel.addContact(
+                        Contact(fullName, career),
+                        viewModel.contactsList.value?.size ?: 0
+                    )
+                }
+            })
+            dialogFragment.show(supportFragmentManager, ADD_CONTACT_FRAGMENT_TAG)
+        }
     }
 
     private fun setRecyclerView() {
         setTouchRecycleItemListener()
         binding.recyclerViewContacts.layoutManager = LinearLayoutManager(this)
+
         val adapter = ContactsRecyclerViewAdapter(this, this)
-        binding.recyclerViewContacts.isNestedScrollingEnabled = true
         binding.recyclerViewContacts.adapter = adapter
 
-        viewModel = ViewModelProvider(
+        viewModel = setProvider(this)
+        setObserver(viewModel, adapter)
+
+    }
+
+    private fun setTouchRecycleItemListener() {
+        val itemTouchCallback = setTouchCallBackListener()
+        ItemTouchHelper(itemTouchCallback).attachToRecyclerView(binding.recyclerViewContacts)
+    }
+
+    private fun setProvider(context: ContactActivity): ContactViewModel {
+        return ViewModelProvider(
             this
         )[ContactViewModel::class.java]
+    }
 
+    private fun setObserver(viewModel: ContactViewModel, adapter: ContactsRecyclerViewAdapter) {
         viewModel.contactsList.observe(this, Observer { list ->
             list?.let {
                 adapter.updateList(it)
@@ -66,51 +105,10 @@ class ContactActivity : AppCompatActivity(), IContactsRecyclerViewAdapter {
                 val position = viewHolder.adapterPosition
                 val contact = viewModel.contactsList.value.orEmpty()[position]
                 deleteItemWithRestore(contact, position)
-
             }
         }
     }
 
-    private fun setEventListeners() {
-        setNavigationUpListeners()
-        setAddContactButtonListener()
-//        setNavigationBackListener()
-//        setFindListener()
-    }
-
-    private fun setAddContactButtonListener() {
-        binding.addContacts.setOnClickListener {
-
-            val dialogFragment = ContactAddFragmentDialog()
-
-            dialogFragment.setPositiveButtonClickListener(object : ContactAddFragmentDialog(),
-                    (String, String) -> Unit {
-                override fun invoke(fullName: String, career: String) {
-                    viewModel.addContact(Contact(fullName, career))
-                }
-            })
-
-            dialogFragment.show(supportFragmentManager, "contacts_add_fragment_dialog")
-
-        }
-    }
-
-    private fun setFindListener() {
-        TODO("Not yet implemented")
-    }
-
-    private fun setNavigationBackListener() {
-        TODO("Not yet implemented")
-    }
-
-    private fun setNavigationUpListeners() {
-        binding.navigationUp.viewTreeObserver.addOnScrollChangedListener {
-            checkForDisplayUpNavigationButton()
-        }
-        binding.navigationUp.setOnClickListener {
-            binding.scrollViewLayout.smoothScrollTo(0, 0)
-        }
-    }
 
     private fun checkForDisplayUpNavigationButton() {
         val scrollY = binding.scrollViewLayout.scrollY
@@ -143,14 +141,15 @@ class ContactActivity : AppCompatActivity(), IContactsRecyclerViewAdapter {
     }
 
     private fun deleteItemWithRestore(contact: Contact, position: Int) {
-        viewModel.deleteContact(contact)
-        Snackbar.make(
-            binding.recyclerViewContacts,
-            "Contact ${contact.fullName} deleted",
-            Snackbar.LENGTH_LONG
-        ).setAction("Restore ${contact.fullName}") {
+        if (viewModel.deleteContact(contact)) {
+            Snackbar.make(
+                binding.recyclerViewContacts,
+                "Contact ${contact.fullName} deleted",
+                Snackbar.LENGTH_LONG
+            ).setAction("Restore") {
                 viewModel.addContact(contact, position)
             }.show()
+        }
         checkForDisplayUpNavigationButton()
     }
 }

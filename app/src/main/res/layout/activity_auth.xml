@@ -7,7 +7,7 @@
     android:background="@color/background"
     android:paddingLeft="@dimen/layout_padding"
     android:paddingRight="@dimen/layout_padding"
-    tools:context="com.shpp.android.task2.activities.AuthActivity">
+    tools:context="com.shpp.android.task2.ui.auth.AuthActivity">
 
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -130,7 +130,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/passwordInputLayout" />
 
-    <com.shpp.android.task2.activities.GoogleButtonView
+    <com.shpp.android.task2.ui.utils.GoogleButtonView
         android:id="@+id/googleButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

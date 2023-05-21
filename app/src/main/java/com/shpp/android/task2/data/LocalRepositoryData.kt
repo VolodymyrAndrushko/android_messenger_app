@@ -1,6 +1,6 @@
 package com.shpp.android.task2.data
 
-import com.shpp.android.task2.models.Contact
+import com.shpp.android.task2.domain.dataclass.Contact
 
 
 class LocalRepositoryData {

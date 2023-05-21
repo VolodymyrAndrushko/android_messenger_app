@@ -1,4 +1,4 @@
-package com.shpp.android.task2.activities
+package com.shpp.android.task2.ui.utils
 
 import android.content.Context
 import android.content.res.TypedArray
@@ -61,6 +61,21 @@ class GoogleButtonView @JvmOverloads constructor(
         typedArray.recycle()
     }
 
+    private fun setButtonBackground() {
+        buttonBackGroundColor = typedArray.getColor(
+            R.styleable.GoogleButtonView_buttonColor, BUTTON_COLOR
+        )
+        buttonCornerRadius =
+            typedArray.getDimension(R.styleable.GoogleButtonView_buttonCornerRadius, 0f)
+
+        val shapeDrawable = GradientDrawable().apply {
+            cornerRadius = buttonCornerRadius
+            setColor(buttonBackGroundColor)
+        }
+
+        background = shapeDrawable
+    }
+
     private fun setButtonText() {
         buttonText = typedArray.getString(R.styleable.GoogleButtonView_buttonText) ?: ""
         buttonTextColor =
@@ -91,21 +106,6 @@ class GoogleButtonView @JvmOverloads constructor(
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         text = spannableString
-    }
-
-    private fun setButtonBackground() {
-        buttonBackGroundColor = typedArray.getColor(
-            R.styleable.GoogleButtonView_buttonColor, BUTTON_COLOR
-        )
-        buttonCornerRadius =
-            typedArray.getDimension(R.styleable.GoogleButtonView_buttonCornerRadius, 0f)
-
-        val shapeDrawable = GradientDrawable().apply {
-            cornerRadius = buttonCornerRadius
-            setColor(buttonBackGroundColor)
-        }
-
-        background = shapeDrawable
     }
 
     private fun setButtonImage() {
@@ -143,6 +143,10 @@ class GoogleButtonView @JvmOverloads constructor(
     }
 
     override fun onDraw(canvas: Canvas) {
+        super.onDraw(drawButton(canvas))
+    }
+
+    private fun drawButton(canvas: Canvas): Canvas {
         val buttonContentWidth = width - paddingLeft - paddingRight
 
         val method = transformationMethod
@@ -160,6 +164,6 @@ class GoogleButtonView @JvmOverloads constructor(
         val bodyWidth = textWidth + drawableWidth + drawablePadding
         canvas.translate((buttonContentWidth - bodyWidth) / 2, 0f)
 
-        super.onDraw(canvas)
+        return canvas
     }
 }

@@ -7,7 +7,7 @@
     android:background="@color/background_color"
     android:fillViewport="false"
     android:id="@+id/scroll_view_layout"
-    tools:context="com.shpp.android.task2.activities.ContactActivity">
+    tools:context="com.shpp.android.task2.ui.contactslist.ContactActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
