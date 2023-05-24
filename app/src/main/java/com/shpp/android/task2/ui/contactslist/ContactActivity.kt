@@ -84,10 +84,8 @@ class ContactActivity : AppCompatActivity(), IContactsRecyclerViewAdapter {
     }
 
     private fun setObserver(viewModel: ContactViewModel, adapter: ContactsRecyclerViewAdapter) {
-        viewModel.contactsList.observe(this, Observer { list ->
-            list?.let {
-                adapter.updateList(it)
-            }
+        viewModel.contactsList.observe(this, Observer {
+            adapter.updateList(it)
         })
     }
 

@@ -2,7 +2,11 @@ package com.shpp.android.task2.ui.contactslist.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -17,16 +21,27 @@ import com.shpp.android.task2.ui.contactslist.adapters.diff.ContactDiffCallback
 
 
 class ContactsRecyclerViewAdapter(
-    private val context: Context, private var listener: IContactsRecyclerViewAdapter
+    private val context: Context, private val listener: IContactsRecyclerViewAdapter
 ) : RecyclerView.Adapter<ContactsRecyclerViewAdapter.ContactsViewHolder>() {
     private val contactsList = ArrayList<Contact>()
+
+    inner class ContactsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val profilePhotoIV: ImageView = itemView.findViewById(R.id.iv_profile_photo)
+        val fullNameTV: TextView = itemView.findViewById(R.id.tv_full_name)
+        val careerTV: TextView = itemView.findViewById(R.id.tv_career)
+        val deleteButton: ImageView = itemView.findViewById(R.id.iv_delete_button)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactsViewHolder {
-        return ContactsViewHolder(
-            ContactsRecyclerViewRowBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent, false
-            )
+        val viewHolder = ContactsViewHolder(
+            LayoutInflater.from(context).inflate(R.layout.contacts_recycler_view_row, parent, false)
         )
+        viewHolder.deleteButton.setOnClickListener {
+            listener.onItemClicked(
+                contactsList[viewHolder.adapterPosition], viewHolder.adapterPosition
+            )
+        }
+        return viewHolder
     }
 
     override fun getItemCount(): Int {
@@ -34,36 +49,20 @@ class ContactsRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ContactsViewHolder, position: Int) {
-        holder.bindTo(contactsList[position], position)
-    }
 
-    inner class ContactsViewHolder(private val binding: ContactsRecyclerViewRowBinding) :
-        RecyclerView.ViewHolder(binding.root) {
 
-        fun bindTo(contact: Contact, position: Int) {
-            val localDrawable = R.drawable.ic_profile_default_photo
-
-            with(binding) {
-                tvFullName.text = contact.fullName
-                tvCareer.text = contact.career
-
-                Glide.with(context).load(contact.image).apply(
-                    RequestOptions().centerCrop().transform(CircleCrop()).placeholder(localDrawable)
-                        .error(localDrawable).diskCacheStrategy(DiskCacheStrategy.ALL)
-                ).into(ivProfilePhoto)
-            }
-            setListener(contact, position)
-        }
-
-        private fun setListener(contact: Contact, position: Int) {
-            with(binding) {
-                ivDeleteButton.setOnClickListener {
-                    listener.onItemClicked(
-                        contact, position
-                    )
-                }
-            }
-        }
+        val currentContact = contactsList[position]
+        val localDrawable = R.drawable.ic_profile_default_photo
+        holder.fullNameTV.text = currentContact.fullName
+        holder.careerTV.text = currentContact.career
+        Glide
+            .with(context)
+            .load(currentContact.image)
+            .apply(
+                RequestOptions().centerCrop().transform(CircleCrop()).placeholder(localDrawable)
+                    .error(localDrawable).diskCacheStrategy(DiskCacheStrategy.ALL)
+            )
+            .into(holder.profilePhotoIV)
     }
 
     fun updateList(newList: List<Contact>) {
@@ -73,4 +72,3 @@ class ContactsRecyclerViewAdapter(
         diffResult.dispatchUpdatesTo(this)
     }
 }
-
