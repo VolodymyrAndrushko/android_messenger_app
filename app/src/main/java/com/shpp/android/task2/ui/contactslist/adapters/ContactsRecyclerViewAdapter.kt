@@ -24,45 +24,41 @@ class ContactsRecyclerViewAdapter(
     private val context: Context, private val listener: IContactsRecyclerViewAdapter
 ) : RecyclerView.Adapter<ContactsRecyclerViewAdapter.ContactsViewHolder>() {
     private val contactsList = ArrayList<Contact>()
-
-    inner class ContactsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val profilePhotoIV: ImageView = itemView.findViewById(R.id.iv_profile_photo)
-        val fullNameTV: TextView = itemView.findViewById(R.id.tv_full_name)
-        val careerTV: TextView = itemView.findViewById(R.id.tv_career)
-        val deleteButton: ImageView = itemView.findViewById(R.id.iv_delete_button)
-    }
+    inner class ContactsViewHolder(val binding: ContactsRecyclerViewRowBinding)
+        :RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactsViewHolder {
-        val viewHolder = ContactsViewHolder(
-            LayoutInflater.from(context).inflate(R.layout.contacts_recycler_view_row, parent, false)
-        )
-        viewHolder.deleteButton.setOnClickListener {
-            listener.onItemClicked(
-                contactsList[viewHolder.adapterPosition], viewHolder.adapterPosition
-            )
-        }
-        return viewHolder
+        val binding = ContactsRecyclerViewRowBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+
+        return ContactsViewHolder(binding)
+
     }
 
-    override fun getItemCount(): Int {
-        return contactsList.size
-    }
+    override fun getItemCount(): Int = contactsList.size
+
 
     override fun onBindViewHolder(holder: ContactsViewHolder, position: Int) {
-
-
-        val currentContact = contactsList[position]
         val localDrawable = R.drawable.ic_profile_default_photo
-        holder.fullNameTV.text = currentContact.fullName
-        holder.careerTV.text = currentContact.career
-        Glide
-            .with(context)
-            .load(currentContact.image)
-            .apply(
-                RequestOptions().centerCrop().transform(CircleCrop()).placeholder(localDrawable)
-                    .error(localDrawable).diskCacheStrategy(DiskCacheStrategy.ALL)
-            )
-            .into(holder.profilePhotoIV)
+        with(holder.binding) {
+            with(contactsList[position]){
+                tvFullName.text = fullName
+                tvCareer.text = career
+                Glide
+                .with(context)
+                .load(image)
+                .apply(
+                    RequestOptions().centerCrop().transform(CircleCrop()).placeholder(localDrawable)
+                        .error(localDrawable).diskCacheStrategy(DiskCacheStrategy.ALL)
+                )
+                .into(ivProfilePhoto)
+                ivDeleteButton.setOnClickListener {
+                    listener.onItemClicked(
+                        this, position
+                    )
+                }
+            }
+        }
     }
 
     fun updateList(newList: List<Contact>) {
