@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_contacts_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="614dp" />
+
+    <View
+        android:id="@+id/contacts_background"
+        app:layout_constraintBottom_toBottomOf="@id/centerGuideLine"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/zero"
+        android:background="@color/contacts_background_color" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/centerGuideLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvProfile"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_10"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/profile"
+        android:textColor="@color/text_color"
+        android:textFontWeight="600"
+        android:textSize="@dimen/text_medium_large" />
+
+    <ImageView
+        android:id="@+id/navigation_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_20"
+        android:contentDescription="@string/back_arrow_navigation"
+        android:src="@drawable/ic_back_arrow"
+        app:layout_constraintBottom_toBottomOf="@id/tvProfile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvProfile" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivProfilePhoto"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="@dimen/margin_20"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvProfile" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fullNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_large"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/fullname"
+        android:textColor="@color/white_text_color"
+        android:textFontWeight="600"
+        android:textSize="@dimen/text_medium_large"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivProfilePhoto"
+
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCareerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/career"
+        android:textColor="@color/gray_color_2"
+        android:textFontWeight="600"
+        android:textSize="@dimen/text_medium"
+        app:layout_constraintBottom_toTopOf="@id/tvHomeAddressText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/fullNameText" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvHomeAddressText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/home_address"
+        android:textColor="@color/gray_color_2"
+        android:textFontWeight="600"
+        android:textSize="@dimen/text_medium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCareerText" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/socialIconsGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_62"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/centerGuideLine"
+        app:constraint_referenced_ids="ivFacebookIcon,ivInstagramIcon,ivLinkedinIcon"
+        >
+    </androidx.constraintlayout.widget.Group>
+
+    <ImageView
+        android:id="@+id/ivFacebookIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/orange"
+        android:contentDescription="@string/facebook_icon"
+        android:src="@drawable/ic_facebook"
+        android:layout_marginEnd="@dimen/margin_32"
+        app:layout_constraintTop_toTopOf="@id/ivLinkedinIcon"
+        app:layout_constraintEnd_toStartOf="@id/ivLinkedinIcon"
+        />
+
+    <ImageView
+        android:id="@+id/ivLinkedinIcon"
+        android:layout_width="58dp"
+        android:layout_height="@dimen/icon_size"
+        android:backgroundTint="@color/orange"
+        android:src="@drawable/ic_linkedin"
+        android:contentDescription="@string/linkedin_icon"
+        app:layout_constraintTop_toTopOf="@id/centerGuideLine"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_goneMarginTop="@dimen/margin_62"
+        />
+
+    <ImageView
+        android:id="@+id/ivInstagramIcon"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:backgroundTint="@color/orange"
+        android:layout_marginStart="@dimen/margin_32"
+
+        android:contentDescription="@string/instagram_icon"
+        android:src="@drawable/ic_instagram"
+        app:layout_constraintTop_toTopOf="@id/ivLinkedinIcon"
+        app:layout_constraintStart_toEndOf="@id/ivLinkedinIcon"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_16"
+        android:text="@string/message"
+        app:backgroundTint="@color/orange"
+        android:textColor="@color/white_text_color"
+        android:fontFamily="@font/open_sans"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textFontWeight="600"
+        android:textSize="@dimen/message_button_size"
+        android:paddingTop="@dimen/padding_medium"
+        android:paddingBottom="@dimen/padding_medium"
+        app:cornerRadius="@dimen/border_radius"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

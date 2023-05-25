@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
             val fragment = ContactsFragment()
             supportFragmentManager
                 .beginTransaction()
-                .add(R.id.activityFragmentContainer, fragment)
+                .replace(R.id.activityFragmentContainer, fragment)
                 .commit()
         }
     }

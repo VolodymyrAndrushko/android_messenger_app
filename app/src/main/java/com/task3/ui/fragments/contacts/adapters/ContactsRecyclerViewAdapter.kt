@@ -16,7 +16,8 @@ import com.task3.ui.fragments.contacts.ContactsFragment
 import com.task3.ui.fragments.contacts.adapters.diff.ContactDiffCallback
 
 class ContactsRecyclerViewAdapter(
-    private val context: ContactsFragment, private val listener: IContactsRecyclerViewAdapter
+    private val context: ContactsFragment,
+    private val listener: IContactsRecyclerViewAdapter,
 ) : RecyclerView.Adapter<ContactsRecyclerViewAdapter.ContactsViewHolder>() {
     private val contactsList = ArrayList<Contact>()
     inner class ContactsViewHolder(val binding: ContactsRecyclerViewRowBinding)
@@ -47,8 +48,14 @@ class ContactsRecyclerViewAdapter(
                             .error(localDrawable).diskCacheStrategy(DiskCacheStrategy.ALL)
                     )
                     .into(ivProfilePhoto)
+
                 ivDeleteButton.setOnClickListener {
-                    listener.onItemClicked(
+                    listener.deleteContact(
+                        this, position
+                    )
+                }
+                contact.setOnClickListener {
+                    listener.viewDetails(
                         this, position
                     )
                 }

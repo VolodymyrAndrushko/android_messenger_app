@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewPropertyAnimator
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.task3.R
 import com.example.task3.databinding.FragmentContactsMenuBinding
 import com.google.android.material.snackbar.Snackbar
 import com.task3.ui.fragments.contacts.adapters.ContactsRecyclerViewAdapter
@@ -65,7 +67,7 @@ class ContactsFragment : Fragment(), IContactsRecyclerViewAdapter {
                     )
                 }
             })
-            dialogFragment.show(childFragmentManager, ADD_CONTACT_FRAGMENT_TAG)
+            dialogFragment.show(parentFragmentManager, ADD_CONTACT_FRAGMENT_TAG)
         }
     }
 
@@ -131,8 +133,24 @@ class ContactsFragment : Fragment(), IContactsRecyclerViewAdapter {
         }
     }
 
-    override fun onItemClicked(contact: Contact, position: Int) {
+    override fun deleteContact(contact: Contact, position: Int) {
         deleteItemWithRestore(contact, position)
+    }
+
+    override fun viewDetails(contact: Contact, position: Int) {
+        with(contact) {
+            val fragment: ProfileFragment = ProfileFragment.newInstance(
+                fullName,
+                career,
+                image
+            )
+            parentFragmentManager
+                .beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.activityFragmentContainer, fragment)
+                .commit()
+        }
+
     }
 
     private fun View.animateVisibility(visibility: Int) {
