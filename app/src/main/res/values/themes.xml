@@ -1,8 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Task3" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Base.Theme.Task3" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="googleButtonStyle">@style/DefaultGoogleButtonStyle</item>
+    </style>
+
+    <style name="DefaultGoogleButtonStyle">
+        <item name="buttonColor">#FAFAFA</item>
+        <item name="buttonText">@string/GOOGLE</item>
+        <item name="buttonTextColor">#18181F</item>
+        <item name="buttonCornerRadius">@dimen/border_radius</item>
+        <item name="buttonTextFont">@font/open_sans</item>
+        <item name="buttonTextFontWeight">600</item>
+        <item name="buttonTextFontSize">@dimen/google_text_size</item>
     </style>
 
     <style name="Theme.Task3" parent="Base.Theme.Task3" />
