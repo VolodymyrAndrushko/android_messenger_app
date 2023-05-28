@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewPropertyAnimator
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -19,9 +18,7 @@ import com.task3.R
 import com.task3.domain.dataclass.Contact
 import com.task3.ui.fragments.contacts.adapters.ContactsRecyclerViewAdapter
 import com.task3.domain.repository.IContactsRecyclerViewAdapter
-import com.task3.ui.fragments.Configs
 import com.task3.ui.fragments.contacts.dialogFragments.AddContactFragmentDialog
-import com.task3.ui.fragments.contract.navigator
 
 private const val ADD_CONTACT_FRAGMENT_TAG = "contacts_add_fragment_dialog"
 
@@ -139,7 +136,9 @@ class ContactsFragment : Fragment(), IContactsRecyclerViewAdapter {
 
     override fun viewDetails(contact: Contact) {
 //        navigator().showContactProfileScreen(contact)
-        navController.navigate(R.id.action_fragmentContacts_to_fragmentProfile, bundleOf(Configs.ARG_CONTACT to contact))
+//        navController.navigate(R.id.action_fragmentContacts_to_fragmentProfile, bundleOf(Configs.ARG_CONTACT to contact))
+        val action = ContactsFragmentDirections.actionFragmentContactsToFragmentProfile(contact)
+        navController.navigate(action)
     }
 
     private fun View.animateVisibility(visibility: Int) {

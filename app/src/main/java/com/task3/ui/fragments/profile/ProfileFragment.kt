@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.task3.databinding.FragmentDetailViewBinding
 import com.task3.domain.dataclass.Contact
@@ -21,6 +22,7 @@ class ProfileFragment : Fragment() {
 
     private lateinit var contact: Contact
     private val binding get() = requireNotNull(_binding)
+    private val args: ProfileFragmentArgs by navArgs<ProfileFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,13 +31,15 @@ class ProfileFragment : Fragment() {
     ): View? {
         _binding = FragmentDetailViewBinding.inflate(inflater, container, false)
 
-        contact = getContact() ?: throw IllegalArgumentException(NO_CONTACT_FOUND_EXCEPTION)
+//        contact = getContact() ?: throw IllegalArgumentException(NO_CONTACT_FOUND_EXCEPTION)
+        contact = args.contact
 
         setProfile()
         setListeners()
 
         return binding.root
     }
+
 
     private fun getContact(): Contact? {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) requireArguments().getParcelable(
@@ -89,15 +93,15 @@ class ProfileFragment : Fragment() {
         @JvmStatic
         private val NO_CONTACT_FOUND_EXCEPTION = "No contact found."
 
-
         @JvmStatic
         fun newInstance(contact: Contact): ProfileFragment {
-            val args = Bundle()
-            args.putParcelable(Configs.ARG_CONTACT, contact)
-
-            val fragment = ProfileFragment()
-            fragment.arguments = args
-            return fragment
+//            val args = Bundle()
+//            args.putParcelable(Configs.ARG_CONTACT, contact)
+//
+//            val fragment = ProfileFragment()
+//            fragment.arguments = args
+//            return fragment
+            return ProfileFragment()
         }
     }
 
