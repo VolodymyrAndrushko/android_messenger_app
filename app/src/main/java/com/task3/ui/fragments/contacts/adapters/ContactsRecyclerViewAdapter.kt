@@ -8,8 +8,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
-import com.example.task3.R
-import com.example.task3.databinding.ContactsRecyclerViewRowBinding
+import com.task3.R
+import com.task3.databinding.ContactsRecyclerViewRowBinding
 import com.task3.domain.dataclass.Contact
 import com.task3.domain.repository.IContactsRecyclerViewAdapter
 import com.task3.ui.fragments.contacts.ContactsFragment
@@ -56,7 +56,7 @@ class ContactsRecyclerViewAdapter(
                 }
                 contact.setOnClickListener {
                     listener.viewDetails(
-                        this, position
+                        this
                     )
                 }
             }

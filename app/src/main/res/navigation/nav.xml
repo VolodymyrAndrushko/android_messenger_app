@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav"
+    app:startDestination="@id/fragmentContacts">
+
+    <fragment
+        android:id="@+id/fragmentContacts"
+        android:name="com.task3.ui.fragments.contacts.ContactsFragment"
+        android:label="@string/contacts"
+        tools:layout="@layout/fragment_contacts"
+        >
+        <action
+            android:id="@+id/action_fragmentContacts_to_fragmentProfile"
+            app:destination="@id/fragmentProfile" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentProfile"
+        android:name="com.task3.ui.fragments.profile.ProfileFragment"
+        android:label="@string/contacts"
+        tools:layout="@layout/fragment_detail_view"
+        >
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentContacts"
+            app:destination="@id/fragmentContacts" />
+    </fragment>
+</navigation>

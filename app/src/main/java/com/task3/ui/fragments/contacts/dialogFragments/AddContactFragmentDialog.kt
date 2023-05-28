@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
-import com.example.task3.databinding.ContactsAddFragmentDialofBinding
+import com.task3.databinding.ContactsAddFragmentDialofBinding
 
 private const val DIALOG_NAME = "Add Contact"
 private const val NEGATIVE_BUTTON_TEXT = "Cancel"

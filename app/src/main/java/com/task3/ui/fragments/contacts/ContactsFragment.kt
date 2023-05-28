@@ -5,25 +5,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewPropertyAnimator
-import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.task3.R
-import com.example.task3.databinding.FragmentContactsMenuBinding
+import com.task3.databinding.FragmentContactsBinding
 import com.google.android.material.snackbar.Snackbar
+import com.task3.R
+import com.task3.domain.dataclass.Contact
 import com.task3.ui.fragments.contacts.adapters.ContactsRecyclerViewAdapter
 import com.task3.domain.repository.IContactsRecyclerViewAdapter
+import com.task3.ui.fragments.Configs
 import com.task3.ui.fragments.contacts.dialogFragments.AddContactFragmentDialog
-import com.task3.domain.dataclass.Contact
+import com.task3.ui.fragments.contract.navigator
 
 private const val ADD_CONTACT_FRAGMENT_TAG = "contacts_add_fragment_dialog"
 
 class ContactsFragment : Fragment(), IContactsRecyclerViewAdapter {
-    private lateinit var binding: FragmentContactsMenuBinding
+    private val navController get() = findNavController()
+
+    private var _binding: FragmentContactsBinding? = null
+    private val binding get() = requireNotNull(_binding)
     private lateinit var viewModel: ContactViewModel
 
     override fun onCreateView(
@@ -31,15 +37,13 @@ class ContactsFragment : Fragment(), IContactsRecyclerViewAdapter {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentContactsMenuBinding.inflate(inflater, container, false)
-
+        _binding = FragmentContactsBinding.inflate(inflater, container, false)
 
         setListeners()
         setRecyclerView()
 
         return binding.root
     }
-
 
     private fun setListeners() {
         setNavigationUpListeners()
@@ -71,7 +75,6 @@ class ContactsFragment : Fragment(), IContactsRecyclerViewAdapter {
         }
     }
 
-
     private fun setRecyclerView() {
         setTouchRecycleItemListener()
         binding.recyclerViewContacts.layoutManager = LinearLayoutManager(context)
@@ -81,7 +84,6 @@ class ContactsFragment : Fragment(), IContactsRecyclerViewAdapter {
 
         viewModel = setProvider(this)
         setObserver(viewModel, adapter)
-
     }
 
     private fun setTouchRecycleItemListener() {
@@ -91,7 +93,7 @@ class ContactsFragment : Fragment(), IContactsRecyclerViewAdapter {
 
     private fun setProvider(context: ContactsFragment): ContactViewModel {
         return ViewModelProvider(
-            this
+            context
         )[ContactViewModel::class.java]
     }
 
@@ -119,13 +121,11 @@ class ContactsFragment : Fragment(), IContactsRecyclerViewAdapter {
         }
     }
 
-
     private fun checkForDisplayUpNavigationButton() {
         val scrollY = binding.scrollViewLayout.scrollY
         val layoutHeight = binding.scrollViewLayout.height
         val contentSize = binding.scrollViewLayout.getChildAt(0).height
         if ((scrollY + layoutHeight >= contentSize) && contentSize > layoutHeight
-
         ) {
             binding.navigationUp.animateVisibility(View.VISIBLE)
         } else if (scrollY == 0) {
@@ -137,20 +137,9 @@ class ContactsFragment : Fragment(), IContactsRecyclerViewAdapter {
         deleteItemWithRestore(contact, position)
     }
 
-    override fun viewDetails(contact: Contact, position: Int) {
-        with(contact) {
-            val fragment: ProfileFragment = ProfileFragment.newInstance(
-                fullName,
-                career,
-                image
-            )
-            parentFragmentManager
-                .beginTransaction()
-                .addToBackStack(null)
-                .replace(R.id.activityFragmentContainer, fragment)
-                .commit()
-        }
-
+    override fun viewDetails(contact: Contact) {
+//        navigator().showContactProfileScreen(contact)
+        navController.navigate(R.id.action_fragmentContacts_to_fragmentProfile, bundleOf(Configs.ARG_CONTACT to contact))
     }
 
     private fun View.animateVisibility(visibility: Int) {
@@ -170,12 +159,17 @@ class ContactsFragment : Fragment(), IContactsRecyclerViewAdapter {
         if (viewModel.deleteContact(contact)) {
             Snackbar.make(
                 binding.recyclerViewContacts,
-                "Contact ${contact.fullName} deleted",
+                getString(R.string.deletedContact, contact.fullName),
                 Snackbar.LENGTH_LONG
-            ).setAction("Restore") {
+            ).setAction(getString(R.string.restore)) {
                 viewModel.addContact(contact, position)
             }.show()
         }
         checkForDisplayUpNavigationButton()
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
     }
 }

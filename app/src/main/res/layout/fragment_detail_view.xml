@@ -35,7 +35,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_12"
         android:fontFamily="@font/open_sans"
         android:text="@string/profile"
         android:textColor="@color/text_color"
@@ -47,11 +47,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_20"
+        android:layout_marginTop="@dimen/margin_10"
         android:contentDescription="@string/back_arrow_navigation"
         android:src="@drawable/ic_back_arrow"
-        app:layout_constraintBottom_toBottomOf="@id/tvProfile"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvProfile" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivProfilePhoto"

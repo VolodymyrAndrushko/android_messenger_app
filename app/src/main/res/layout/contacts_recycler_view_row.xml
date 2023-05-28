@@ -19,7 +19,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeWidth="@dimen/stroke_width"
-        app:strokeColor="@color/profile_stroke_color">
+        app:strokeColor="@color/profile_stroke_color"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
