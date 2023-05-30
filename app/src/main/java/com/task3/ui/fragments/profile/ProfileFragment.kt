@@ -2,6 +2,8 @@ package com.task3.ui.fragments.profile
 
 import android.os.Build
 import android.os.Bundle
+import android.transition.TransitionInflater
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +11,11 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.task3.R
 import com.task3.databinding.FragmentDetailViewBinding
 import com.task3.domain.dataclass.Contact
 import com.task3.ui.fragments.Configs
@@ -34,10 +38,27 @@ class ProfileFragment : Fragment() {
 //        contact = getContact() ?: throw IllegalArgumentException(NO_CONTACT_FOUND_EXCEPTION)
         contact = args.contact
 
+        setSharedElementsTransition()
         setProfile()
         setListeners()
 
         return binding.root
+    }
+
+    private fun setSharedElementsTransition() {
+        binding.ivProfilePhoto.transitionName = Configs.TRANSITION_NAME_IMAGE+"${contact.id}"
+        binding.fullNameText.transitionName = Configs.TRANSITION_NAME_FULL_NAME+"${contact.id}"
+        binding.tvCareerText.transitionName = Configs.TRANSITION_NAME_CAREER+"${contact.id}"
+
+        val animation = TransitionInflater.from(context).inflateTransition(
+            R.transition.photo_transition
+//            android.R.transition.move
+        )
+
+        sharedElementEnterTransition = animation
+        sharedElementReturnTransition = animation
+
+        startPostponedEnterTransition()
     }
 
 
@@ -68,6 +89,7 @@ class ProfileFragment : Fragment() {
             .load(image)
             .centerCrop()
             .circleCrop()
+            .error(R.drawable.ic_profile_default_photo)
             .into(view)
     }
 
@@ -78,7 +100,14 @@ class ProfileFragment : Fragment() {
 
     private fun setNavigationBackListener() {
         binding.navigationBack.setOnClickListener {
-            findNavController().popBackStack()
+//            findNavController().popBackStack()
+
+            val extras = FragmentNavigatorExtras(
+                binding.ivProfilePhoto to Configs.TRANSITION_NAME_IMAGE+"${contact.id}",
+                        binding.fullNameText to Configs.TRANSITION_NAME_FULL_NAME+"${contact.id}",
+                        binding.tvCareerText to Configs.TRANSITION_NAME_CAREER+"${contact.id}"
+            )
+            findNavController().navigate(ProfileFragmentDirections.actionFragmentProfileToFragmentContacts(),extras)
         }
     }
 
@@ -90,19 +119,19 @@ class ProfileFragment : Fragment() {
 
     companion object {
 
-        @JvmStatic
-        private val NO_CONTACT_FOUND_EXCEPTION = "No contact found."
-
-        @JvmStatic
-        fun newInstance(contact: Contact): ProfileFragment {
+//        @JvmStatic
+//        private val NO_CONTACT_FOUND_EXCEPTION = "No contact found."
+//
+//        @JvmStatic
+//        fun newInstance(contact: Contact): ProfileFragment {
 //            val args = Bundle()
 //            args.putParcelable(Configs.ARG_CONTACT, contact)
 //
 //            val fragment = ProfileFragment()
 //            fragment.arguments = args
 //            return fragment
-            return ProfileFragment()
-        }
+//            return ProfileFragment()
+//        }
     }
 
     override fun onDestroy() {

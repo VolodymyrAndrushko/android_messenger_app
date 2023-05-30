@@ -91,6 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
+            android:transitionGroup="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/guideline_contacts_end"
             android:paddingBottom="@dimen/margin_137"/>

@@ -1,6 +1,7 @@
 package com.task3.ui.fragments.contacts
 
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,16 +9,18 @@ import android.view.ViewPropertyAnimator
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.task3.databinding.FragmentContactsBinding
 import com.google.android.material.snackbar.Snackbar
 import com.task3.R
+import com.task3.databinding.FragmentContactsBinding
 import com.task3.domain.dataclass.Contact
-import com.task3.ui.fragments.contacts.adapters.ContactsRecyclerViewAdapter
 import com.task3.domain.repository.IContactsRecyclerViewAdapter
+import com.task3.ui.fragments.Configs
+import com.task3.ui.fragments.contacts.adapters.ContactsRecyclerViewAdapter
 import com.task3.ui.fragments.contacts.dialogFragments.AddContactFragmentDialog
 
 private const val ADD_CONTACT_FRAGMENT_TAG = "contacts_add_fragment_dialog"
@@ -36,10 +39,28 @@ class ContactsFragment : Fragment(), IContactsRecyclerViewAdapter {
     ): View? {
         _binding = FragmentContactsBinding.inflate(inflater, container, false)
 
+        setSharedElementsTransition()
+
         setListeners()
         setRecyclerView()
 
         return binding.root
+    }
+
+    private fun setSharedElementsTransition() {
+//        binding.ivProfilePhoto.transitionName = Configs.TRANSITION_NAME_IMAGE+"${contact.id}"
+//        binding.fullNameText.transitionName = Configs.TRANSITION_NAME_FULL_NAME+"${contact.id}"
+//        binding.tvCareerText.transitionName = Configs.TRANSITION_NAME_CAREER+"${contact.id}"
+
+        val animation = TransitionInflater.from(context).inflateTransition(
+            R.transition.photo_transition
+//            android.R.transition.move
+        )
+
+        sharedElementEnterTransition = animation
+        sharedElementReturnTransition = animation
+
+        startPostponedEnterTransition()
     }
 
     private fun setListeners() {
@@ -58,18 +79,13 @@ class ContactsFragment : Fragment(), IContactsRecyclerViewAdapter {
 
     private fun setAddContactButtonListener() {
         binding.addContacts.setOnClickListener {
-            val dialogFragment = AddContactFragmentDialog()
-            dialogFragment.setPositiveButtonClickListener(object : AddContactFragmentDialog(),
-                    (String, String) -> Unit {
-                override fun invoke(fullName: String, career: String) {
-                    viewModel.addContact(
-                        Contact(fullName, career),
-                        viewModel.contactsList.value?.size ?: 0
-                    )
-                }
-            })
-            dialogFragment.show(parentFragmentManager, ADD_CONTACT_FRAGMENT_TAG)
+            showAddContactFragment()
         }
+    }
+
+    private fun showAddContactFragment() {
+        val dialogFragment = AddContactFragmentDialog(this)
+        dialogFragment.show(parentFragmentManager, AddContactFragmentDialog.TAG)
     }
 
     private fun setRecyclerView() {
@@ -134,11 +150,23 @@ class ContactsFragment : Fragment(), IContactsRecyclerViewAdapter {
         deleteItemWithRestore(contact, position)
     }
 
-    override fun viewDetails(contact: Contact) {
+    override fun viewDetails(contact: Contact, transitionPairs: Array<Pair<View, String>>) {
 //        navigator().showContactProfileScreen(contact)
 //        navController.navigate(R.id.action_fragmentContacts_to_fragmentProfile, bundleOf(Configs.ARG_CONTACT to contact))
-        val action = ContactsFragmentDirections.actionFragmentContactsToFragmentProfile(contact)
-        navController.navigate(action)
+
+        val extras = FragmentNavigatorExtras(*transitionPairs)
+        val action =
+            ContactsFragmentDirections.actionFragmentContactsToFragmentProfile(contact)
+        navController.navigate(
+            action, extras
+        )
+    }
+
+    override fun addContact(contact: Contact) {
+        viewModel.addContact(
+            contact,
+            viewModel.contactsList.value?.size ?: 0
+        )
     }
 
     private fun View.animateVisibility(visibility: Int) {

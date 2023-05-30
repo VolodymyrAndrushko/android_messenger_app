@@ -2,38 +2,81 @@ package com.task3.ui.fragments.contacts.dialogFragments
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.fragment.app.DialogFragment
+import com.bumptech.glide.Glide
+import com.task3.R
 import com.task3.databinding.ContactsAddFragmentDialofBinding
+import com.task3.domain.dataclass.Contact
+import com.task3.domain.repository.IContactsRecyclerViewAdapter
 
-private const val DIALOG_NAME = "Add Contact"
-private const val NEGATIVE_BUTTON_TEXT = "Cancel"
-private const val POSITIVE_BUTTON_TEXT = "Save"
+//private const val DIALOG_NAME = "Add Contact"
+//private const val NEGATIVE_BUTTON_TEXT = "Cancel"
+//private const val POSITIVE_BUTTON_TEXT = "Save"
 
-open class AddContactFragmentDialog : AppCompatDialogFragment() {
-    private lateinit var binding: ContactsAddFragmentDialofBinding
-    private var positiveButtonClickListener: ((String, String) -> Unit)? = null
+open class AddContactFragmentDialog(var positiveButtonClickListener: IContactsRecyclerViewAdapter) :
+    DialogFragment() {
+
+    private var imageUrl: String? = null
+
+    private var _binding: ContactsAddFragmentDialofBinding? = null
+    private val binding get() = requireNotNull(_binding)
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
-        val inflater: LayoutInflater = requireActivity().layoutInflater
-        binding = ContactsAddFragmentDialofBinding.inflate(inflater, null, false)
-        val view: View = binding.root
+        _binding = ContactsAddFragmentDialofBinding.inflate(layoutInflater)
 
-        builder.setView(view).setTitle(DIALOG_NAME)
-            .setPositiveButton(POSITIVE_BUTTON_TEXT) { _, _ ->
-                positiveButtonClickListener?.invoke(
-                    binding.tiFullName.editText?.text.toString(),
-                    binding.tiCareer.editText?.text.toString(),
-                )
-            }.setNegativeButton(NEGATIVE_BUTTON_TEXT, null)
+        return activity?.let {
+            val builder = AlertDialog.Builder(it)
 
-        return builder.create()
+            with(binding) {
+                setImage(ivProfilePhoto)
+
+                addPhoto.setOnClickListener {
+                    Toast.makeText(context, "Add photo", Toast.LENGTH_SHORT).show()
+                }
+
+                btnSave.setOnClickListener {
+                    positiveButtonClickListener.addContact(
+                        Contact(
+                            tiFullName.editText?.text.toString(),
+                            tiCareer.editText?.text.toString(),
+                            imageUrl
+                            )
+                    )
+                }
+            }
+
+            builder
+                .setView(binding.root)
+                .create()
+        } ?: throw IllegalStateException()
     }
 
-    fun setPositiveButtonClickListener(listener: (String, String) -> Unit) {
-        positiveButtonClickListener = listener
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun setImage(view: ImageView, image: String? = null) {
+        Glide.with(this)
+            .load(image)
+            .centerCrop()
+            .circleCrop()
+            .error(R.drawable.ic_profile_default_photo)
+            .into(view)
+    }
+
+    companion object {
+        @JvmStatic
+        val TAG: String = AddContactFragmentDialog::class.java.name
+
+        @JvmStatic
+        val REQUEST_KEY = "$TAG:RequestKey"
+
+        @JvmStatic
+        val RESPONSE_KEY = "$TAG:ResponseKey"
     }
 }

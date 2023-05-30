@@ -1,6 +1,7 @@
 package com.task3.domain.dataclass
 
 import android.os.Parcelable
+import android.widget.ImageView
 import kotlinx.android.parcel.Parcelize
 import java.util.UUID
 

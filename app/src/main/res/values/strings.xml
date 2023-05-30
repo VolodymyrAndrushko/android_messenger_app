@@ -37,4 +37,10 @@
     <string name="message">MESSAGE</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="contactphototransition">contactPhotoTransition</string>
+    <string name="save">SAVE</string>
+    <string name="phone">Phone</string>
+    <string name="address">Address</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="email">Email</string>
 </resources>

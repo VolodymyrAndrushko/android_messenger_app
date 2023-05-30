@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/contact"
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="@dimen/zero"
@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_profile_photo"
                 android:layout_width="@dimen/profile_photo_size"
                 android:layout_height="@dimen/profile_photo_size"

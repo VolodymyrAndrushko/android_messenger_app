@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Base.Theme.Task3" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="googleButtonStyle">@style/DefaultGoogleButtonStyle</item>
+        
     </style>
 
     <style name="DefaultGoogleButtonStyle">
