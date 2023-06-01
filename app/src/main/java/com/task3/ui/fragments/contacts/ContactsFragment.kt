@@ -39,28 +39,17 @@ class ContactsFragment : Fragment(), IContactsRecyclerViewAdapter {
     ): View? {
         _binding = FragmentContactsBinding.inflate(inflater, container, false)
 
-        setSharedElementsTransition()
-
         setListeners()
         setRecyclerView()
 
         return binding.root
     }
 
-    private fun setSharedElementsTransition() {
-//        binding.ivProfilePhoto.transitionName = Configs.TRANSITION_NAME_IMAGE+"${contact.id}"
-//        binding.fullNameText.transitionName = Configs.TRANSITION_NAME_FULL_NAME+"${contact.id}"
-//        binding.tvCareerText.transitionName = Configs.TRANSITION_NAME_CAREER+"${contact.id}"
-
-        val animation = TransitionInflater.from(context).inflateTransition(
-            R.transition.photo_transition
-//            android.R.transition.move
-        )
-
-        sharedElementEnterTransition = animation
-        sharedElementReturnTransition = animation
-
+    override fun onResume() {
+        super.onResume()
+        postponeEnterTransition()
         startPostponedEnterTransition()
+
     }
 
     private fun setListeners() {
@@ -97,6 +86,8 @@ class ContactsFragment : Fragment(), IContactsRecyclerViewAdapter {
 
         viewModel = setProvider(this)
         setObserver(viewModel, adapter)
+
+        startPostponedEnterTransition()
     }
 
     private fun setTouchRecycleItemListener() {

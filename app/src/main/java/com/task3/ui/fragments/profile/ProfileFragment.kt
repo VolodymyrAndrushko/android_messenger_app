@@ -57,7 +57,7 @@ class ProfileFragment : Fragment() {
 
         sharedElementEnterTransition = animation
         sharedElementReturnTransition = animation
-
+        postponeEnterTransition()
         startPostponedEnterTransition()
     }
 
@@ -100,14 +100,7 @@ class ProfileFragment : Fragment() {
 
     private fun setNavigationBackListener() {
         binding.navigationBack.setOnClickListener {
-//            findNavController().popBackStack()
-
-            val extras = FragmentNavigatorExtras(
-                binding.ivProfilePhoto to Configs.TRANSITION_NAME_IMAGE+"${contact.id}",
-                        binding.fullNameText to Configs.TRANSITION_NAME_FULL_NAME+"${contact.id}",
-                        binding.tvCareerText to Configs.TRANSITION_NAME_CAREER+"${contact.id}"
-            )
-            findNavController().navigate(ProfileFragmentDirections.actionFragmentProfileToFragmentContacts(),extras)
+            findNavController().navigateUp()
         }
     }
 

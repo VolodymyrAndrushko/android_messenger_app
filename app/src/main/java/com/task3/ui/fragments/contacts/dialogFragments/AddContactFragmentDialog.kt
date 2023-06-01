@@ -45,6 +45,11 @@ open class AddContactFragmentDialog(var positiveButtonClickListener: IContactsRe
                             imageUrl
                             )
                     )
+                    dismiss()
+                }
+
+                navigationBack.setOnClickListener {
+                    dismiss()
                 }
             }
 
