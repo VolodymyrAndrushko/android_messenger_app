@@ -32,6 +32,7 @@ class ContactsFragment : Fragment(), IContactsRecyclerViewAdapter {
     private val binding get() = requireNotNull(_binding)
     private lateinit var viewModel: ContactViewModel
 
+    // TODO 'onCreateView' always returns non-null type
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -101,6 +102,7 @@ class ContactsFragment : Fragment(), IContactsRecyclerViewAdapter {
         )[ContactViewModel::class.java]
     }
 
+    // TODO Redundant SAM-constructor
     private fun setObserver(viewModel: ContactViewModel, adapter: ContactsRecyclerViewAdapter) {
         viewModel.contactsList.observe(viewLifecycleOwner, Observer {
             adapter.updateList(it)
@@ -137,10 +139,13 @@ class ContactsFragment : Fragment(), IContactsRecyclerViewAdapter {
         }
     }
 
+    // TODO https://kotlinlang.org/docs/coding-conventions.html#class-layout
+    // TODO https://kotlinlang.org/docs/coding-conventions.html#modifiers-order
     override fun deleteContact(contact: Contact, position: Int) {
         deleteItemWithRestore(contact, position)
     }
 
+    // TODO The corresponding parameter in the supertype 'IContactsRecyclerViewAdapter' is named 'view'. This may cause problems when calling this function with named arguments.
     override fun viewDetails(contact: Contact, transitionPairs: Array<Pair<View, String>>) {
 //        navigator().showContactProfileScreen(contact)
 //        navController.navigate(R.id.action_fragmentContacts_to_fragmentProfile, bundleOf(Configs.ARG_CONTACT to contact))

@@ -16,6 +16,7 @@ import com.task3.domain.repository.IContactsRecyclerViewAdapter
 //private const val NEGATIVE_BUTTON_TEXT = "Cancel"
 //private const val POSITIVE_BUTTON_TEXT = "Save"
 
+// TODO Property 'positiveButtonClickListener' could be private
 open class AddContactFragmentDialog(var positiveButtonClickListener: IContactsRecyclerViewAdapter) :
     DialogFragment() {
 

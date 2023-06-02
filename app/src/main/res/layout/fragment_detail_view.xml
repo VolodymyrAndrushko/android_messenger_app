@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--TODO What is this 2 blank lines for?-->
 
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -113,6 +114,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvCareerText" />
 
+    <!-- TODO XML tag has empty body -->
     <androidx.constraintlayout.widget.Group
         android:id="@+id/socialIconsGroup"
         android:layout_width="match_parent"

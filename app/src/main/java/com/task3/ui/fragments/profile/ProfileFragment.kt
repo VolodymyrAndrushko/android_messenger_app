@@ -85,6 +85,7 @@ class ProfileFragment : Fragment() {
 
     private fun setProfileImage(view: ImageView) {
         val image = contact.image
+        // TODO second entry Glide in code. Would be better extract to extension function.
         Glide.with(this@ProfileFragment)
             .load(image)
             .centerCrop()
@@ -110,6 +111,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    // TODO What is this for?
     companion object {
 
 //        @JvmStatic

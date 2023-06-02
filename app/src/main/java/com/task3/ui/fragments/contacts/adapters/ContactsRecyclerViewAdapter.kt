@@ -23,6 +23,7 @@ class ContactsRecyclerViewAdapter(
 ) : RecyclerView.Adapter<ContactsRecyclerViewAdapter.ContactsViewHolder>() {
     private val contactsList = ArrayList<Contact>()
 
+    // TODO Property 'transitionPairs' could be private
     var transitionPairs = emptyArray<Pair<View, String>>()
 
     inner class ContactsViewHolder(val binding: ContactsRecyclerViewRowBinding) :

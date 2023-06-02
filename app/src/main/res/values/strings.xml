@@ -1,4 +1,5 @@
 <resources>
+    <!-- TODO Strings are not properly commented and not grouped.-->
     <string name="contacts">Contacts</string>
     <string name="add_contacts">Add contacts</string>
     <string name="full_name">Full name</string>

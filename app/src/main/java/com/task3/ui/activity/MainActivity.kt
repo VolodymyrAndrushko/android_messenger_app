@@ -23,6 +23,7 @@ import com.task3.ui.fragments.contract.Navigator
 import com.task3.ui.fragments.contract.ResultListener
 import com.task3.ui.fragments.profile.ProfileFragment
 
+// TODO What is this code for?
 //class MainActivity : AppCompatActivity(), Navigator {
 //    private var _binding: ActivityMainBinding? = null
 //    private val binding: ActivityMainBinding get() = requireNotNull(_binding)

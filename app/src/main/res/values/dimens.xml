@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- TODO Dimens are not properly commented and not grouped.-->
     <dimen name="text_large">24sp</dimen>
     <dimen name="text_semi_large">18sp</dimen>
     <dimen name="text_medium">14sp</dimen>

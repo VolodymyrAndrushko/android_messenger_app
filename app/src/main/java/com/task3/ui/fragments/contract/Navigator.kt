@@ -10,7 +10,7 @@ typealias ResultListener<T> = (T) -> Unit
 fun Fragment.navigator(): Navigator {
     return requireActivity() as Navigator
 }
-
+// TODO What is this for?
 interface Navigator {
 
     fun showContactsScreen()
