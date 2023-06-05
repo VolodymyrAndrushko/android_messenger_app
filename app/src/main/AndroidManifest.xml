@@ -13,10 +13,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Task3"
+        android:theme="@style/Theme.AppTheme"
         tools:targetApi="31">
         <activity
-            android:name="com.task3.ui.activity.MainActivity"
+            android:name="com.vandrushko.ui.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
