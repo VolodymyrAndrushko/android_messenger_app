@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:fillViewport="true">
+
+    <View
+        android:id="@+id/bot"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/background"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/settingsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/layout_padding"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/settings"
+        android:textColor="@color/white_text_color"
+        android:textFontWeight="600"
+
+        android:textSize="@dimen/text_large"
+        app:layout_constraintBottom_toTopOf="@id/profilePhoto"
+        app:layout_constraintLeft_toLeftOf="parent"
+
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/profilePhoto"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_profile_default_photo"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_image_end"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline_image_start" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fullNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_large"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/fullname"
+        android:textColor="@color/white_text_color"
+        android:textFontWeight="600"
+        android:textSize="@dimen/text_medium_large"
+        app:layout_constraintBottom_toTopOf="@id/careerText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline_image_end"
+
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/careerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/career"
+        android:textColor="@color/gray_color_2"
+        android:textFontWeight="600"
+        android:textSize="@dimen/text_medium"
+        app:layout_constraintBottom_toTopOf="@id/homeAddressText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/fullNameText" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/homeAddressText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/home_address"
+        android:textColor="@color/gray_color_2"
+        android:textFontWeight="600"
+        android:textSize="@dimen/text_medium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/careerText" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/socialIconsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline_icons_start">
+
+        <ImageView
+            android:id="@+id/icon1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/orange"
+            android:contentDescription="@string/facebook_icon"
+            android:layout_marginEnd="@dimen/margin_very_large"
+            android:src="@drawable/ic_facebook"
+            app:layout_constraintRight_toLeftOf="@id/icon2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/icon2"
+            android:layout_width="58dp"
+            android:layout_height="@dimen/icon_size"
+            android:backgroundTint="@color/orange"
+            android:src="@drawable/ic_linkedin"
+            android:contentDescription="@string/linkedin_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/icon3"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:backgroundTint="@color/orange"
+            android:layout_marginStart="@dimen/margin_very_large"
+            android:contentDescription="@string/instagram_icon"
+            android:src="@drawable/ic_instagram"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/icon2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/goToSettingsText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="157dp"
+        android:fontFamily="@font/open_sans"
+        android:gravity="center"
+        android:text="@string/go_to_settings"
+        android:textColor="@color/button_color"
+        android:textFontWeight="600"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/editButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layout_padding"
+        android:layout_marginRight="@dimen/layout_padding"
+        android:backgroundTint="@color/background_color"
+        android:fontFamily="@font/open_sans"
+        android:outlineSpotShadowColor="@android:color/transparent"
+        android:padding="@dimen/padding_semi_small"
+        android:textAllCaps="false"
+        android:text="@string/edit_profile"
+        android:textColor="@color/button_color"
+        android:textFontWeight="600"
+        android:textSize="@dimen/text_medium"
+        app:cornerRadius="@dimen/border_radius"
+        app:layout_constraintBottom_toTopOf="@id/viewContactsButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline_edit_button"
+
+        app:strokeColor="@color/button_color"
+        app:strokeWidth="@dimen/button_border_size" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/viewContactsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layout_padding"
+        android:layout_marginRight="@dimen/layout_padding"
+        android:backgroundTint="@color/orange"
+        android:fontFamily="@font/open_sans"
+        android:padding="@dimen/padding_medium"
+        android:text="@string/view_my_contacts"
+        android:textColor="@color/white"
+        android:textFontWeight="600"
+        android:textSize="@dimen/button_text_size"
+        app:cornerRadius="@dimen/border_radius"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editButton" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_image_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.10" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_image_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.29" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_icons_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.58" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_edit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.78" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

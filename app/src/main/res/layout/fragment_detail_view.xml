@@ -16,7 +16,7 @@
     <View
         android:id="@+id/contacts_background"
         android:layout_width="0dp"
-        android:layout_height="@dimen/zero"
+        android:layout_height="0dp"
         android:background="@color/contacts_background_color"
         app:layout_constraintBottom_toBottomOf="@id/centerGuideLine"
         app:layout_constraintEnd_toEndOf="parent"

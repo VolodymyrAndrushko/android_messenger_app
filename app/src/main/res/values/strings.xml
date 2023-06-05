@@ -7,7 +7,7 @@
     <string name="back_arrow_navigation">Back arrow navigation</string>
     <string name="find_button">Find button</string>
     <string name="navigation_up_button">Navigation up button</string>
-    <string name="app_name">My Application</string>
+    <string name="app_name">MyContacts</string>
     <string name="settings">Settings</string>
     <string name="deletedContact">Contact %s deleted.</string>
     <string name="restore">Restore</string>
@@ -34,13 +34,16 @@
     <string name="linkedin_icon">Linkedin icon</string>
     <string name="instagram_icon">Instagram icon</string>
     <string name="profile">Profile</string>
+    <string name="my_profile">My Profile</string>
     <string name="message">MESSAGE</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="contactphototransition">contactPhotoTransition</string>
     <string name="save">SAVE</string>
     <string name="phone">Phone</string>
     <string name="address">Address</string>
     <string name="date_of_birth">Date of birth</string>
     <string name="email">Email</string>
+    <string name="add_photo">Add Photo</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="loading">Loading</string>
 </resources>

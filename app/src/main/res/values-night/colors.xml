@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="background">#0B0225</color>
+    <color name="white_text_color">#EAFFF7</color>
+    <color name="orange">#5800D3</color>
+    <color name="gray_color_1">#9C46FF</color>
+    <color name="gray_color_2">#9437FF</color>
+    <color name="google_color">#000000</color>
+    <color name="underline_color">#5800D3</color>
+    <color name="error">#E30000</color>
+</resources>

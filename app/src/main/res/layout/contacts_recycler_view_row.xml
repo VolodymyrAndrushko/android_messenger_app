@@ -9,7 +9,7 @@
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="@dimen/zero"
+        android:elevation="0dp"
         app:cardCornerRadius="@dimen/corner_radius"
         android:layout_marginTop="@dimen/margin_16"
         android:layout_marginLeft="@dimen/margin_16"
@@ -19,12 +19,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeWidth="@dimen/stroke_width"
-        app:strokeColor="@color/profile_stroke_color"
-        >
+
+        app:strokeColor="@color/profile_stroke_color">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/background_color">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_profile_photo"

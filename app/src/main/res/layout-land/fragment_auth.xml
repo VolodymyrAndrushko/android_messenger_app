@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        android:padding="@dimen/layout_padding">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fullNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/acquainted"
+            android:textColor="@color/white_text_color"
+            android:textFontWeight="600"
+            android:textSize="@dimen/text_large"
+            app:layout_constraintBottom_toTopOf="@id/careerText"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            android:layout_marginTop="@dimen/margin_146"
+            android:layout_marginBottom="@dimen/margin_small"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/careerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/find_out_profile_text"
+            android:textColor="@color/white_text_color"
+            android:textFontWeight="400"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintBottom_toTopOf="@id/emailInputLayout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fullNameText"
+
+            android:layout_marginBottom="@dimen/margin_large"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:hint="@string/e_mail"
+            app:boxStrokeErrorColor="@color/underline_color"
+            app:errorEnabled="true"
+            app:errorIconDrawable="@null"
+            app:errorTextColor="@color/underline_color"
+            app:expandedHintEnabled="false"
+            app:hintEnabled="true"
+            app:hintTextAppearance="@style/TextInputHint"
+            app:hintTextColor="@color/gray_color_1"
+            app:layout_constraintBottom_toTopOf="@id/passwordInputLayout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/careerText"
+
+            android:layout_marginBottom="@dimen/margin_large"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                android:fontFamily="@font/open_sans"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:textColor="@color/white_text_color"
+                android:textFontWeight="600"
+                android:textSize="@dimen/text_medium_large" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:hint="@string/password"
+            app:boxStrokeErrorColor="@color/underline_color"
+            app:errorEnabled="true"
+            app:errorIconDrawable="@null"
+            app:errorTextColor="@color/underline_color"
+            app:expandedHintEnabled="false"
+            app:hintTextAppearance="@style/TextInputHint"
+            app:layout_constraintBottom_toTopOf="@id/rememberCheckBox"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/emailInputLayout"
+
+            android:layout_marginBottom="@dimen/margin_large"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                android:fontFamily="@font/open_sans"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:textColor="@color/white_text_color"
+                android:textFontWeight="600"
+                android:textSize="@dimen/text_medium_large" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/rememberCheckBox"
+            app:layout_constraintBottom_toTopOf="@id/googleButton"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/passwordInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/remember_me"
+            android:textFontWeight="600"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/gray_color_2"
+
+            android:button="@drawable/checkbox_selector"
+            android:buttonTint="@android:color/transparent"
+            android:buttonTintMode="add"
+            android:paddingStart="@dimen/padding_small"
+            android:layout_marginBottom="@dimen/margin_67"
+            />
+
+
+        <com.example.myapplication.GoogleButtonView
+            android:id="@+id/googleButton"
+            app:layout_constraintBottom_toTopOf="@id/orText"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rememberCheckBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:buttonTextFontSize="@dimen/google_text_size"
+            app:cornerRadius="@dimen/border_radius"
+            android:paddingTop="@dimen/padding_google_btn"
+            app:buttonImagePadding="@dimen/padding_medium"
+            android:paddingBottom="@dimen/padding_google_btn"
+            app:buttonImage="@drawable/ic_google"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/orText"
+            app:layout_constraintBottom_toTopOf="@id/registerButton"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/googleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/or"
+            android:textColor="@color/white_text_color"
+            android:textFontWeight="600"
+            android:textSize="@dimen/or_text_size"
+
+            android:paddingTop="@dimen/margin_small"
+            android:paddingBottom="@dimen/margin_small"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/registerButton"
+            app:layout_constraintBottom_toTopOf="@id/agreementText"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/orText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/register"
+            android:textColor="@color/white_text_color"
+            android:textFontWeight="600"
+            android:textSize="@dimen/button_text_size"
+            app:cornerRadius="@dimen/border_radius"
+            app:strokeColor="@color/orange"
+            app:strokeWidth="@dimen/button_border_size"
+
+            android:outlineSpotShadowColor="@android:color/transparent"
+
+            android:padding="@dimen/margin_medium"
+            android:layout_marginBottom="@dimen/margin_medium"
+
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/agreementText"
+            app:layout_constraintBottom_toTopOf="@id/bottomTextLayout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/registerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/agreement_text"
+            android:textAlignment="center"
+            android:textColor="@color/white_text_color"
+            android:textFontWeight="400"
+            android:textSize="@dimen/text_small"
+            android:layout_marginBottom="@dimen/margin_small"
+            />
+
+
+        <LinearLayout
+            android:id="@+id/bottomTextLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/agreementText"
+            >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/accountText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:text="@string/already_have_account_text"
+                android:textAlignment="center"
+                android:textColor="@color/gray_color_2"
+                android:textFontWeight="600"
+                android:textSize="@dimen/text_medium"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/signInText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:text="@string/sign_in_text"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textFontWeight="600"
+                android:textSize="@dimen/text_medium"
+                android:layout_marginStart="@dimen/margin_12"
+                />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
