@@ -5,7 +5,7 @@
     android:id="@+id/nav"
     app:startDestination="@id/loadingScreenFragment">
     <dialog
-        android:id="@+id/addContactFragmentDialog2"
+        android:id="@+id/addContactFragmentDialog"
         android:name="com.vandrushko.ui.fragments.contacts.dialogFragments.AddContactFragmentDialog"
         android:label="AddContactFragmentDialog" >
         <argument
@@ -19,42 +19,21 @@
         <argument
             android:name="contact"
             app:argType="com.vandrushko.domain.dataclass.Contact"/>
-        <action
-            android:id="@+id/action_profileFragment_to_pagerFragment"
-            app:destination="@id/pagerFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popUpTo="@id/profileFragment"
-            app:popUpToInclusive="true"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/pagerFragment"
         android:name="com.vandrushko.ui.fragments.pager.PagerFragment"
         android:label="PagerFragment" >
-        <action
-            android:id="@+id/action_pagerFragment_to_addContactFragmentDialog2"
-            app:destination="@id/addContactFragmentDialog2"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popUpTo="@id/pagerFragment"
-            app:popUpToInclusive="true"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
-        <action
-            android:id="@+id/action_pagerFragment_to_profileFragment"
-            app:destination="@id/profileFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popUpTo="@id/pagerFragment"
-            app:popUpToInclusive="true"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
         <argument
             android:name="email"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_pagerFragment_to_addContactFragmentDialog"
+            app:destination="@id/addContactFragmentDialog" />
+        <action
+            android:id="@+id/action_pagerFragment_to_profileFragment2"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/authFragment"
@@ -63,12 +42,8 @@
         <action
             android:id="@+id/action_authFragment_to_pagerFragment2"
             app:destination="@id/pagerFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popUpTo="@id/authFragment"
-            app:popUpToInclusive="true"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
+
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/loadingScreenFragment"
@@ -76,10 +51,10 @@
         android:label="fragment_loading_screen"
         tools:layout="@layout/fragment_loading_screen" >
         <action
-            android:id="@+id/action_loadingScreenFragment_to_authFragment"
+            android:id="@+id/action_loadingScreenFragment_to_authFragment2"
             app:destination="@id/authFragment" />
         <action
-            android:id="@+id/action_loadingScreenFragment_to_pagerFragment"
+            android:id="@+id/action_loadingScreenFragment_to_pagerFragment2"
             app:destination="@id/pagerFragment" />
     </fragment>
 </navigation>

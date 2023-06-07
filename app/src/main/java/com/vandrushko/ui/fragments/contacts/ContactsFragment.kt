@@ -17,7 +17,11 @@ import com.vandrushko.domain.repository.IContactsRecyclerViewAdapter
 import com.vandrushko.ui.fragments.contacts.adapters.ContactsRecyclerViewAdapter
 import com.vandrushko.ui.fragments.pager.PagerFragmentDirections
 import com.vandrushko.ui.utils.BaseFragment
+import com.vandrushko.ui.utils.ext.changePageTo
 import java.io.Serializable
+
+
+private const val MY_PROFILE_PAGE_INDEX = 0
 
 class ContactsFragment : BaseFragment<FragmentContactsBinding>(FragmentContactsBinding::inflate) {
 
@@ -31,7 +35,7 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(FragmentContactsB
         override fun viewDetails(contact: Contact, transitionPairs: Array<Pair<View, String>>) {
             val extras = FragmentNavigatorExtras(*transitionPairs)
             val action =
-                PagerFragmentDirections.actionPagerFragmentToProfileFragment(contact)
+                PagerFragmentDirections.actionPagerFragmentToProfileFragment2(contact)
             navController.navigate(
                 action, extras
             )
@@ -55,10 +59,19 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(FragmentContactsB
     private fun setListeners() {
         setNavigationUpListeners()
         setAddContactButtonListener()
+        setBackArrowOnClickListener()
     }
 
+    private fun setBackArrowOnClickListener() {
+        binding.navigationBack.setOnClickListener {
+//            changePageTo(MY_PROFILE_PAGE_INDEX)
+            changePageTo(requireActivity(), MY_PROFILE_PAGE_INDEX)
+        }
+    }
+
+
     private fun setNavigationUpListeners() {
-        binding.navigationUp.viewTreeObserver.addOnScrollChangedListener {
+        binding.root.setOnScrollChangeListener { _, _, _, _, _ ->
             checkForDisplayUpNavigationButton()
         }
         binding.navigationUp.setOnClickListener {
@@ -74,7 +87,7 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(FragmentContactsB
 
     private fun showAddContactFragment() {
         val action =
-            PagerFragmentDirections.actionPagerFragmentToAddContactFragmentDialog2(viewModel)
+            PagerFragmentDirections.actionPagerFragmentToAddContactFragmentDialog(viewModel)
         navController.navigate(action)
     }
 

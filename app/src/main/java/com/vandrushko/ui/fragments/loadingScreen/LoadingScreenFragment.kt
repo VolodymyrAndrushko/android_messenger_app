@@ -1,60 +1,55 @@
 package com.vandrushko.ui.fragments.loadingScreen
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.vandrushko.R
+import androidx.lifecycle.lifecycleScope
+import com.vandrushko.databinding.FragmentLoadingScreenBinding
+import com.vandrushko.ui.fragments.Configs
+import com.vandrushko.ui.utils.BaseFragment
+import com.vandrushko.ui.utils.DataStoreSingleton
+import com.vandrushko.ui.utils.Matcher
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [LoadingScreenFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class LoadingScreenFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class LoadingScreenFragment :
+    BaseFragment<FragmentLoadingScreenBinding>(FragmentLoadingScreenBinding::inflate) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+        loginAttempt()
+    }
+
+    private fun loginAttempt() {
+        lifecycleScope.launch {
+            val email = DataStoreSingleton.readStringData(
+                requireContext(),
+                Configs.EMAIL_KEY,
+            )
+            val password = DataStoreSingleton.readStringData(
+                requireContext(),
+                Configs.PASSWORD_KEY,
+            )
+
+            val action =
+                if (isValidLoginData(email, password)) {
+                    LoadingScreenFragmentDirections.actionLoadingScreenFragmentToPagerFragment2(
+                        email
+                    )
+                } else {
+                    LoadingScreenFragmentDirections.actionLoadingScreenFragmentToAuthFragment2()
+                }
+            navController.navigate(action)
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_loading_screen, container, false)
+    private fun isValidLoginData(email: String?, password: String?): Boolean {
+        val matcher = Matcher()
+        return matcher.isValidEmail(email) && matcher.isValidPassword(password)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LoadingScreenFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LoadingScreenFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onDestroy() {
+        super.onDestroy()
+        lifecycleScope.cancel()
     }
 }
