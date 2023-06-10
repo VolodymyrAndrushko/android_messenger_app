@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -9,23 +8,38 @@
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginRight="@dimen/margin_16"
         android:elevation="0dp"
         app:cardCornerRadius="@dimen/corner_radius"
-        android:layout_marginTop="@dimen/margin_16"
-        android:layout_marginLeft="@dimen/margin_16"
-        android:layout_marginRight="@dimen/margin_16"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeWidth="@dimen/stroke_width"
-
-        app:strokeColor="@color/profile_stroke_color">
+        app:strokeColor="@color/profile_stroke_color"
+        app:strokeWidth="@dimen/stroke_width">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardConstraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/background_color">
+
+            <CheckBox
+                android:id="@+id/checkboxContacts"
+                android:layout_width="@dimen/contacts_check_box_size"
+                android:layout_height="@dimen/contacts_check_box_size"
+                android:layout_marginStart="@dimen/contacts_checkbox_margin_start"
+                android:layout_marginEnd="@dimen/contacts_checkbox_margin_end"
+                android:button="@drawable/selector_contacts_checkbox"
+                android:buttonTint="@color/white"
+                android:buttonTintMode="multiply"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/iv_profile_photo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_profile_photo"
@@ -33,10 +47,10 @@
                 android:layout_height="@dimen/profile_photo_size"
                 android:layout_marginStart="@dimen/margin_8"
                 android:layout_marginTop="@dimen/margin_8"
-                android:contentDescription="@string/profile_photo"
                 android:layout_marginBottom="@dimen/margin_8"
+                android:contentDescription="@string/profile_photo"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/checkboxContacts"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -77,8 +91,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_22"
                 android:layout_marginEnd="@dimen/margin_14"
-                android:contentDescription="@string/delete_icon"
                 android:layout_marginBottom="@dimen/margin_22"
+                android:contentDescription="@string/delete_icon"
                 android:src="@drawable/ic_delete_button"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

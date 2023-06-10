@@ -2,8 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -52,45 +51,43 @@
             android:layout_height="@dimen/profile_photo"
             android:layout_marginTop="@dimen/margin_71"
             android:layout_marginBottom="@dimen/margin_28"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/space"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/addPhoto"
             android:layout_width="@dimen/add_photo_size"
             android:layout_height="@dimen/add_photo_size"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="@dimen/margin_44"
-            app:srcCompat="@drawable/ic_add_profile_photo"
-            app:layout_constraintTop_toBottomOf="@id/ivProfilePhoto"
             app:layout_constraintBottom_toTopOf="@id/ivProfilePhoto"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivProfilePhoto"
+            app:srcCompat="@drawable/ic_add_profile_photo" />
 
         <Space
             android:id="@+id/space"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/flow"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivProfilePhoto"
-            app:layout_constraintBottom_toTopOf="@id/flow"/>
+            app:layout_constraintTop_toBottomOf="@id/ivProfilePhoto" />
 
         <androidx.constraintlayout.helper.widget.Flow
             android:id="@+id/flow"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/margin_16"
+            android:orientation="vertical"
             android:paddingStart="@dimen/padding_medium"
             android:paddingEnd="@dimen/padding_medium"
             app:constraint_referenced_ids="tiFullName,tiCareer,tiEmail,tiPhone,tiAddress,tiBirth"
             app:flow_verticalGap="@dimen/margin_16"
-            android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@id/btnSave"
-            app:layout_constraintTop_toBottomOf="@id/space"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/space" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tiFullName"
@@ -130,8 +127,8 @@
             android:layout_marginTop="@dimen/margin_24"
             android:hint="@string/email"
             app:expandedHintEnabled="false"
-            app:placeholderText="name@gmail.com"
-            app:hintTextColor="@color/hint_color">
+            app:hintTextColor="@color/hint_color"
+            app:placeholderText="name@gmail.com">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -147,8 +144,8 @@
             android:layout_marginTop="@dimen/margin_24"
             android:hint="@string/phone"
             app:expandedHintEnabled="false"
-            app:placeholderText="(264)-654-3762)"
-            app:hintTextColor="@color/hint_color">
+            app:hintTextColor="@color/hint_color"
+            app:placeholderText="(264)-654-3762)">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -180,8 +177,8 @@
             android:layout_marginTop="@dimen/margin_24"
             android:hint="@string/date_of_birth"
             app:expandedHintEnabled="false"
-            app:placeholderText="12/05/1995"
-            app:hintTextColor="@color/hint_color">
+            app:hintTextColor="@color/hint_color"
+            app:placeholderText="12/05/1995">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -195,6 +192,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_36"
             android:layout_marginEnd="@dimen/margin_16"
             android:layout_marginBottom="@dimen/margin_16"
             android:fontFamily="@font/open_sans"
@@ -202,14 +200,13 @@
             android:text="@string/save"
             android:textColor="@color/white_text_color"
             android:textFontWeight="600"
-            android:layout_marginTop="@dimen/margin_36"
             android:textSize="@dimen/text_large"
             app:backgroundTint="@color/orange"
             app:cornerRadius="@dimen/corner_radius"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/flow"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/flow" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

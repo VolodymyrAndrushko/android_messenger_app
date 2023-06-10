@@ -2,8 +2,6 @@ package com.vandrushko.ui.fragments.contacts
 
 import android.os.Bundle
 import android.view.View
-import android.view.ViewPropertyAnimator
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -17,6 +15,7 @@ import com.vandrushko.domain.repository.IContactsRecyclerViewAdapter
 import com.vandrushko.ui.fragments.contacts.adapters.ContactsRecyclerViewAdapter
 import com.vandrushko.ui.fragments.pager.PagerFragmentDirections
 import com.vandrushko.ui.utils.BaseFragment
+import com.vandrushko.ui.utils.ext.animateVisibility
 import com.vandrushko.ui.utils.ext.changePageTo
 import java.io.Serializable
 
@@ -40,6 +39,32 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(FragmentContactsB
                 action, extras
             )
         }
+
+        override fun showDeleteButton() {
+            binding.buttonDeleteSelected.animateVisibility(View.VISIBLE)
+        }
+
+        override fun hideDeleteButton() {
+            binding.buttonDeleteSelected.animateVisibility(View.GONE)
+        }
+
+        override fun addSelectedItem(contact: Contact) {
+            viewModel.addSelectedContact(contact)
+        }
+
+        override fun removeSelectedItem(contact: Contact) {
+            viewModel.deleteSelectedContact(contact)
+        }
+
+        override fun turnOnSelectionMode() {
+            viewModel.turnOnSelectionMode()
+        }
+
+        override fun turnOffSelectionMode() {
+            viewModel.turnOffSelectionMode()
+        }
+
+        override fun isMultiselectModeActivated(): Boolean = viewModel.isMultiselectModeActivated()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,6 +72,10 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(FragmentContactsB
 
         setListeners()
         setRecyclerView()
+
+        if (viewModel.isMultiselectModeActivated()) {
+            binding.buttonDeleteSelected.animateVisibility(View.VISIBLE)
+        }
     }
 
     override fun onResume() {
@@ -60,12 +89,23 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(FragmentContactsB
         setNavigationUpListeners()
         setAddContactButtonListener()
         setBackArrowOnClickListener()
+        setDeleteSelectedButtonOnClickListener()
     }
 
     private fun setBackArrowOnClickListener() {
         binding.navigationBack.setOnClickListener {
-//            changePageTo(MY_PROFILE_PAGE_INDEX)
             changePageTo(requireActivity(), MY_PROFILE_PAGE_INDEX)
+        }
+    }
+
+    private fun setDeleteSelectedButtonOnClickListener() {
+        binding.buttonDeleteSelected.setOnClickListener {
+            if (viewModel.selectedContactsList.value?.isNotEmpty() == true) {
+                viewModel.deleteSelectedContacts()
+                viewModel.turnOffSelectionMode()
+                binding.buttonDeleteSelected.animateVisibility(View.GONE)
+                setRecyclerView()
+            }
         }
     }
 
@@ -95,10 +135,11 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(FragmentContactsB
         setTouchRecycleItemListener()
         binding.recyclerViewContacts.layoutManager = LinearLayoutManager(context)
 
-        val adapter = ContactsRecyclerViewAdapter(this, listener)
+        viewModel = setProvider(this)
+
+        val adapter = ContactsRecyclerViewAdapter(this, listener, viewModel.selectedContactsList)
         binding.recyclerViewContacts.adapter = adapter
 
-        viewModel = setProvider(this)
         setObserver(viewModel, adapter)
 
         startPostponedEnterTransition()
@@ -116,9 +157,9 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(FragmentContactsB
     }
 
     private fun setObserver(viewModel: ContactViewModel, adapter: ContactsRecyclerViewAdapter) {
-        viewModel.contactsList.observe(viewLifecycleOwner, Observer {
+        viewModel.contactsList.observe(viewLifecycleOwner) {
             adapter.updateList(it)
-        })
+        }
     }
 
     private fun setTouchCallBackListener(): ItemTouchHelper.Callback {
@@ -149,19 +190,6 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(FragmentContactsB
         } else if (scrollY == 0) {
             binding.navigationUp.animateVisibility(View.GONE)
         }
-    }
-
-    private fun View.animateVisibility(visibility: Int) {
-        val animator: ViewPropertyAnimator = when (visibility) {
-            View.VISIBLE -> animate().alpha(1f).setDuration(300)
-            View.GONE -> animate().alpha(0f).setDuration(300)
-            else -> return
-        }
-        animator.withStartAction {
-            this.visibility = View.VISIBLE
-        }.withEndAction {
-            this.visibility = visibility
-        }.start()
     }
 
     private fun deleteItemWithRestore(contact: Contact, position: Int) {

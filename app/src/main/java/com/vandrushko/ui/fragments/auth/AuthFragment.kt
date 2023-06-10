@@ -10,6 +10,8 @@ import com.vandrushko.ui.fragments.Configs
 import com.vandrushko.ui.utils.BaseFragment
 import com.vandrushko.ui.utils.DataStoreSingleton
 import com.vandrushko.ui.utils.Matcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 
@@ -86,7 +88,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
     }
 
     private fun saveLoginData(email: String, password: String) {
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             DataStoreSingleton.
             saveStringData(
                 requireContext(),
@@ -114,5 +116,10 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
 
     private fun clearTextInputError(input: TextInputLayout): Unit {
         input.error = null
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        lifecycleScope.cancel()
     }
 }

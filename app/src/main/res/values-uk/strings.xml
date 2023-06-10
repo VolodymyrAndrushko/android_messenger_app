@@ -1,8 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Task2</string>
+    <string name="app_name">Мої Контакти</string>
+    <string name="find_button">Кнопка пошуку</string>
+    <string name="deletedContact">Контакт %s видалено.</string>
+    <string name="restore">Відновити</string>
     <string name="contacts">Контакти</string>
+    <string name="remember_me">Запам\'ятати мене</string>
+    <string name="register">Регістрація</string>
+    <string name="or">або</string>
+    <string name="e_mail">Електронна пошта</string>
+    <string name="password">Пароль</string>
+    <string name="password_error_message">Пароль повинен складатися з 8 символів і містити щонайменше 1 велику, 1 малу літеру, 1 цифру та 1 спеціальний символ!</string>
+    <string name="email_error_message">Неправильна адреса електронної пошти!</string>
+    <string name="find_out_profile_text">Ознайомтеся з профілем та переходьте до заявки!</string>
+    <string name="agreement_text">Натискаючи \"Зареєструватися\", ви погоджуєтеся з нашими Умовами та положеннями</string>
+    <string name="already_have_account_text">Вже маєте обліковий запис?</string>
+    <string name="sign_in_text">Увійти</string>
     <string name="add_contacts">Додати контакт</string>
+    <string name="hello_blank_fragment">Фрагмент завантаження</string>
+    <string name="loading">Завантаження</string>
+    <string name="delete_icon">Видалити піктограму</string>
+    <string name="profile_photo">Фотографія профілю</string>
     <string name="full_name">Повне ім\'я</string>
+    <string name="settings">Налаштування</string>
+    <string name="fullname">Повне ім\'я</string>
     <string name="career">Кар\'єра</string>
+    <string name="home_address">Дома</string>
+    <string name="edit_profile">Домашня адреса</string>
+    <string name="go_to_settings">Перейдіть до налаштувань та заповніть профіль</string>
+    <string name="view_my_contacts">ПЕРЕГЛЯНУТИ МОЇ КОНТАКТИ</string>
+    <string name="back_arrow_navigation">Навігація зі стрілкою назад</string>
+    <string name="navigation_up_button">Кнопка навігації вгору</string>
+    <string name="acquainted">Давайте познайомимося</string>
+    <string name="save">ЗБЕРЕГТИ</string>
+    <string name="phone">Телефон</string>
+    <string name="address">Адреса</string>
+    <string name="date_of_birth">Дата народження</string>
+    <string name="email">Електронна пошта</string>
+    <string name="add_photo">Додати фото</string>
+    <string name="my_profile">Мій профіль</string>
+    <string name="profile">Профіль</string>
+    <string name="message">ПОВІДОМЛЕННЯ</string>
 </resources>

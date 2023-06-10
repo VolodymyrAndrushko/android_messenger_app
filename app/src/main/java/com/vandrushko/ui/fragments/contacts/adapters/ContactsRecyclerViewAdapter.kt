@@ -3,6 +3,9 @@ package com.vandrushko.ui.fragments.contacts.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -16,32 +19,29 @@ import com.vandrushko.domain.repository.IContactsRecyclerViewAdapter
 import com.vandrushko.ui.fragments.Configs
 import com.vandrushko.ui.fragments.contacts.ContactsFragment
 import com.vandrushko.ui.fragments.contacts.adapters.diff.ContactDiffCallback
+import com.vandrushko.ui.utils.ext.hide
+import com.vandrushko.ui.utils.ext.show
 
 class ContactsRecyclerViewAdapter(
     private val context: ContactsFragment,
     private val listener: IContactsRecyclerViewAdapter,
+    private val selectedContactsList: LiveData<List<Contact>>,
 ) : RecyclerView.Adapter<ContactsRecyclerViewAdapter.ContactsViewHolder>() {
     private val contactsList = ArrayList<Contact>()
 
-    var transitionPairs = emptyArray<Pair<View, String>>()
+    private var selectedItemIndex = -1
+
+    private var transitionPairs = emptyArray<Pair<View, String>>()
 
     inner class ContactsViewHolder(val binding: ContactsRecyclerViewRowBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactsViewHolder {
-        val binding = ContactsRecyclerViewRowBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
+    fun updateList(newList: List<Contact>) {
+        val diffResult = DiffUtil.calculateDiff(ContactDiffCallback(contactsList, newList))
+        contactsList.clear()
+        contactsList.addAll(newList)
 
-        return (ContactsViewHolder(binding))
-    }
-
-    override fun getItemCount(): Int = contactsList.size
-
-    override fun onBindViewHolder(holder: ContactsViewHolder, position: Int) {
-        val contact = contactsList[position]
-        val binding = holder.binding
-
-        setListeners(binding, contact, position)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     private fun setListeners(
@@ -55,7 +55,7 @@ class ContactsRecyclerViewAdapter(
 
         setDeleteButtonOnClickListener(binding, position, contact)
 
-        setCardViewOnClickListener(binding, contact)
+        setCardViewOnClickListener(binding, contact, position)
     }
 
     private fun setTextViews(binding: ContactsRecyclerViewRowBinding, contact: Contact) {
@@ -95,42 +95,125 @@ class ContactsRecyclerViewAdapter(
 
     private fun setCardViewOnClickListener(
         binding: ContactsRecyclerViewRowBinding,
-        contact: Contact
+        contact: Contact,
+        position: Int
     ) {
         with(binding) {
             cardView.setOnClickListener {
-                transitionPairs = arrayOf(
-                    setTransitionName(
-                        ivProfilePhoto,
-                        Configs.TRANSITION_NAME_IMAGE + contact.id
-                    ),
-                    setTransitionName(
-                        tvFullName,
-                        Configs.TRANSITION_NAME_FULL_NAME + contact.id
-                    ), setTransitionName(
-                        tvCareer,
-                        Configs.TRANSITION_NAME_CAREER + contact.id
-                    )
-                )
+                if (!listener.isMultiselectModeActivated()) {
+                    viewDetailView(this, contact)
+                } else if (isChecked(checkboxContacts)) {
+                    unselectItem(this, contact)
+                    hideIfNoItemSelected()
+                } else {
+                    selectItem(this, contact)
+                }
 
-                listener.viewDetails(
-                    contact, transitionPairs
-                )
+            }
+            cardView.setOnLongClickListener {
+                if (!listener.isMultiselectModeActivated()) {
+                    activateMultiSelectMode(position)
+                }
+                true
             }
         }
 
     }
 
-    fun updateList(newList: List<Contact>) {
-        val diffResult = DiffUtil.calculateDiff(ContactDiffCallback(contactsList, newList))
-        contactsList.clear()
-        contactsList.addAll(newList)
+    private fun hideIfNoItemSelected() {
+        if (selectedContactsList.value?.isEmpty() == true) {
+            listener.turnOffSelectionMode()
+            listener.hideDeleteButton()
+            notifyDataSetChanged()
+        }
+    }
 
-        diffResult.dispatchUpdatesTo(this)
+    private fun selectItem(binding: ContactsRecyclerViewRowBinding, contact: Contact) {
+        with(binding) {
+            checkboxContacts.show()
+            checkboxContacts.isChecked = true
+            cardConstraintLayout.setBackgroundColor(
+                ContextCompat.getColor(
+                    context.requireContext(),
+                    R.color.contacts_selected_color
+                )
+            )
+        }
+        listener.addSelectedItem(contact)
+    }
+
+    private fun unselectItem(binding: ContactsRecyclerViewRowBinding, contact: Contact) {
+        with(binding) {
+            checkboxContacts.isChecked = false
+            cardConstraintLayout.setBackgroundColor(
+                ContextCompat.getColor(
+                    context.requireContext(),
+                    R.color.background_color
+                )
+            )
+        }
+        listener.removeSelectedItem(contact)
+    }
+
+    private fun isChecked(checkboxContacts: CheckBox): Boolean = checkboxContacts.isChecked
+
+    private fun viewDetailView(binding: ContactsRecyclerViewRowBinding, contact: Contact) {
+        with(binding) {
+            transitionPairs = arrayOf(
+                setTransitionName(
+                    ivProfilePhoto,
+                    Configs.TRANSITION_NAME_IMAGE + contact.id
+                ),
+                setTransitionName(
+                    tvFullName,
+                    Configs.TRANSITION_NAME_FULL_NAME + contact.id
+                ), setTransitionName(
+                    tvCareer,
+                    Configs.TRANSITION_NAME_CAREER + contact.id
+                )
+            )
+
+            listener.viewDetails(
+                contact, transitionPairs
+            )
+        }
+    }
+
+    private fun activateMultiSelectMode(position: Int) {
+        listener.turnOnSelectionMode()
+        listener.showDeleteButton()
+        selectedItemIndex = position
+        notifyDataSetChanged()
     }
 
     private fun setTransitionName(view: View, name: String): Pair<View, String> {
         view.transitionName = name
         return view to name
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactsViewHolder {
+        val binding = ContactsRecyclerViewRowBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+
+        return (ContactsViewHolder(binding))
+    }
+
+    override fun getItemCount(): Int = contactsList.size
+
+    override fun onBindViewHolder(holder: ContactsViewHolder, position: Int) {
+        val contact = contactsList[position]
+        val binding = holder.binding
+
+        if (listener.isMultiselectModeActivated()) {
+            binding.checkboxContacts.show()
+            if (selectedContactsList.value.orEmpty()
+                    .contains(contact) || selectedItemIndex == position
+            ) {
+                selectItem(binding, contact)
+            }
+        } else {
+            binding.checkboxContacts.hide()
+        }
+        setListeners(binding, contact, position)
     }
 }

@@ -1,9 +1,10 @@
-package com.vandrushko.ui.fragments.pager
+package com.vandrushko.ui.fragments.pager.adapters
 
-import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.vandrushko.ui.fragments.contacts.ContactsFragment
+import com.vandrushko.ui.fragments.pager.PagerFragment
+import com.vandrushko.ui.fragments.pager.PagerFragmentArgs
 import com.vandrushko.ui.fragments.userProfile.UserProfileFragment
 
 

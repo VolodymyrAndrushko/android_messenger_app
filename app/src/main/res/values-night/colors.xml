@@ -1,13 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#000000</color>
+    <!--    Default colors-->
+    <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="background">#0B0225</color>
+    <!--    Text colors-->
+    <color name="text_color">#FAFAFA</color>
+    <color name="name_text_color">#18181F</color>
+    <color name="career_text_color">#828282</color>
+    <color name="hint_color">#BDBDBD</color>
     <color name="white_text_color">#EAFFF7</color>
-    <color name="orange">#5800D3</color>
     <color name="gray_color_1">#9C46FF</color>
     <color name="gray_color_2">#9437FF</color>
-    <color name="google_color">#000000</color>
+
+    <!--    Background colors-->
+    <color name="background_color">#FAFAFA</color>
+    <color name="contacts_background_color">#242235</color>
+    <color name="background">#0B0225</color>
+
+    <!--    Image colors-->
+    <color name="icons_color">#FAFAFA</color>
+    <color name="up_button_icon_color">#FB5E06</color>
+    <color name="delete_icon_color">#FB5E06</color>
+
+    <!--    Stroke colors-->
+    <color name="profile_stroke_color">#B2B2B3</color>
     <color name="underline_color">#5800D3</color>
+
+    <!--    Button colors-->
+    <color name="google_color">#000000</color>
+    <color name="button_color">#242235</color>
+
+    <!--    Main theme colors-->
+    <color name="orange">#5800D3</color>
     <color name="error">#E30000</color>
+    <color name="contacts_selected_color">#B2B2B3</color>
+
 </resources>

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="GoogleButtonView">
-        <attr name="buttonColor" format="color"/>
-        <attr name="buttonText" format="string"/>
-        <attr name="buttonTextColor" format="color"/>
-        <attr name="buttonTextFont" format="reference"/>
-        <attr name="buttonTextFontWeight" format="integer"/>
-        <attr name="buttonTextFontSize" format="dimension"/>
-        <attr name="buttonCornerRadius" format="dimension"/>
-        <attr name="buttonImage" format="reference"/>
-        <attr name="buttonImagePadding" format="dimension"/>
+        <attr name="buttonColor" format="color" />
+        <attr name="buttonText" format="string" />
+        <attr name="buttonTextColor" format="color" />
+        <attr name="buttonTextFont" format="reference" />
+        <attr name="buttonTextFontWeight" format="integer" />
+        <attr name="buttonTextFontSize" format="dimension" />
+        <attr name="buttonCornerRadius" format="dimension" />
+        <attr name="buttonImage" format="reference" />
+        <attr name="buttonImagePadding" format="dimension" />
 
     </declare-styleable>
-    
-    <attr name="googleButtonStyle" format="reference"/>
+
+    <attr name="googleButtonStyle" format="reference" />
 </resources>
