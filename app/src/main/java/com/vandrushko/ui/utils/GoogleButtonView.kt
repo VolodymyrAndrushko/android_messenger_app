@@ -31,14 +31,15 @@ class GoogleButtonView @JvmOverloads constructor(
 
     private val typedArray: TypedArray
     private var buttonBackGroundColor by Delegates.notNull<Int>()
-    private lateinit var buttonText: String
     private var buttonTextColor by Delegates.notNull<Int>()
-    private lateinit var buttonTextFont: Typeface
     private var buttonTextFontWeight by Delegates.notNull<Int>()
     private var buttonTextFontSize by Delegates.notNull<Float>()
     private var buttonCornerRadius by Delegates.notNull<Float>()
     private var imageDrawable: Drawable? = null
     private var imagePadding by Delegates.notNull<Float>()
+
+    private lateinit var buttonText: String
+    private lateinit var buttonTextFont: Typeface
 
     init {
         typedArray = context.obtainStyledAttributes(
@@ -118,6 +119,27 @@ class GoogleButtonView @JvmOverloads constructor(
         ).toInt()
     }
 
+    override fun onDraw(canvas: Canvas) {
+        val buttonContentWidth = width - paddingLeft - paddingRight
+
+        val method = transformationMethod
+        val buttonText =
+            (if (method != null) method.getTransformation(text, this) else text).toString()
+        val textWidth = paint.measureText(buttonText)
+
+        val drawables = compoundDrawables
+        val drawableLeft = drawables[0]
+        val drawableWidth = drawableLeft?.intrinsicWidth ?: 0
+
+        val drawablePadding =
+            if (textWidth > 0 && drawableLeft != null) compoundDrawablePadding else 0
+
+        val bodyWidth = textWidth + drawableWidth + drawablePadding
+        canvas.translate((buttonContentWidth - bodyWidth) / 2, 0f)
+
+        super.onDraw(canvas)
+    }
+
     inner class CustomTypefaceSpan(private val typeface: Typeface, private val fontWeight: Int) :
         TypefaceSpan("") {
 
@@ -138,26 +160,5 @@ class GoogleButtonView @JvmOverloads constructor(
         private fun applyFontWeight(paint: Paint, fontWeight: Int) {
             paint.isFakeBoldText = fontWeight >= Typeface.BOLD
         }
-    }
-
-    override fun onDraw(canvas: Canvas) {
-        val buttonContentWidth = width - paddingLeft - paddingRight
-
-        val method = transformationMethod
-        val buttonText =
-            (if (method != null) method.getTransformation(text, this) else text).toString()
-        val textWidth = paint.measureText(buttonText)
-
-        val drawables = compoundDrawables
-        val drawableLeft = drawables[0]
-        val drawableWidth = drawableLeft?.intrinsicWidth ?: 0
-
-        val drawablePadding =
-            if (textWidth > 0 && drawableLeft != null) compoundDrawablePadding else 0
-
-        val bodyWidth = textWidth + drawableWidth + drawablePadding
-        canvas.translate((buttonContentWidth - bodyWidth) / 2, 0f)
-
-        super.onDraw(canvas)
     }
 }

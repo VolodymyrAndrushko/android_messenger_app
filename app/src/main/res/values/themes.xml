@@ -1,4 +1,5 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
+
     <style name="Base.Theme" parent="Theme.MaterialComponents.NoActionBar">
         <item name="googleButtonStyle">@style/DefaultGoogleButtonStyle</item>
         <item name="colorPrimary">@color/underline_color</item>
@@ -19,6 +20,5 @@
         <item name="buttonTextFontSize">@dimen/google_text_size</item>
     </style>
 
-    <style name="Theme.AppTheme" parent="Base.Theme" >
-    </style>
+    <style name="Theme.AppTheme" parent="Base.Theme"></style>
 </resources>

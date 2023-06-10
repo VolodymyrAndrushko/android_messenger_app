@@ -2,12 +2,11 @@ package com.vandrushko.ui.fragments.pager
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.get
 import androidx.navigation.fragment.navArgs
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.vandrushko.R
 import com.vandrushko.databinding.FragmentViewPagerTabLayoutBinding
+import com.vandrushko.ui.fragments.pager.adapters.PagerFragmentAdapter
 import com.vandrushko.ui.utils.BaseFragment
 
 class PagerFragment : BaseFragment<FragmentViewPagerTabLayoutBinding>(FragmentViewPagerTabLayoutBinding::inflate) {

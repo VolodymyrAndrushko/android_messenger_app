@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -109,8 +109,8 @@
                 android:id="@+id/icon1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/orange"
                 android:layout_marginEnd="@dimen/margin_very_large"
+                android:backgroundTint="@color/orange"
                 android:contentDescription="@string/facebook_icon"
                 android:src="@drawable/ic_facebook"
                 app:layout_constraintRight_toLeftOf="@id/icon2"
@@ -133,8 +133,8 @@
                 android:id="@+id/icon3"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:backgroundTint="@color/orange"
                 android:layout_marginStart="@dimen/margin_very_large"
+                android:backgroundTint="@color/orange"
                 android:contentDescription="@string/instagram_icon"
                 android:src="@drawable/ic_instagram"
                 app:layout_constraintBottom_toBottomOf="parent"

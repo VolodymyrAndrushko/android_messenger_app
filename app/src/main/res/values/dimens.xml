@@ -38,6 +38,8 @@
     <dimen name="margin_71">71dp</dimen>
     <dimen name="margin_28">28dp</dimen>
     <dimen name="margin_44">44dp</dimen>
+    <dimen name="contacts_checkbox_margin_start">8dp</dimen>
+    <dimen name="contacts_checkbox_margin_end">12dp</dimen>
 
     <!--Padding-->
     <dimen name="padding_google_btn">10dp</dimen>
@@ -63,5 +65,8 @@
 
     <!--Tab-->
     <dimen name="tab_size">28dp</dimen>
+
+
+    <dimen name="contacts_check_box_size">20dp</dimen>
 
 </resources>

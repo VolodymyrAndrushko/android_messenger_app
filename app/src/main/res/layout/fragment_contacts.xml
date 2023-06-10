@@ -2,13 +2,12 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll_view_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
     android:fillViewport="false"
-    android:id="@+id/scroll_view_layout"
-    tools:context="com.task3.ui.activity.MainActivity"
-    >
+    tools:context="com.vandrushko.ui.activity.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -25,9 +24,9 @@
             android:id="@+id/contacts_background"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintHeight_max="200dp"
             android:background="@color/contacts_background_color"
             app:layout_constraintBottom_toBottomOf="@id/guideline_contacts_end"
+            app:layout_constraintHeight_max="200dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -78,10 +77,10 @@
             android:id="@+id/find_scope"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
             android:layout_marginEnd="@dimen/margin_16"
             android:contentDescription="@string/find_button"
             android:src="@drawable/ic_find_scope"
-            android:layout_marginTop="@dimen/margin_10"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -91,23 +90,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
+            android:paddingBottom="@dimen/margin_137"
             android:transitionGroup="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/guideline_contacts_end"
-            android:paddingBottom="@dimen/margin_137"/>
+            app:layout_constraintTop_toTopOf="@id/guideline_contacts_end" />
 
         <ImageView
             android:id="@+id/navigation_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_36"
             android:layout_marginEnd="@dimen/margin_16"
             android:layout_marginBottom="@dimen/margin_45"
             android:contentDescription="@string/navigation_up_button"
             android:src="@drawable/ic_button_up"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:id="@+id/buttonDeleteSelected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16"
             android:layout_marginTop="@dimen/margin_36"
-            />
+            android:layout_marginBottom="@dimen/margin_45"
+            android:contentDescription="@string/navigation_up_button"
+            android:src="@drawable/ic_delete_selected"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
