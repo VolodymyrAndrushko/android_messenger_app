@@ -1,7 +1,7 @@
-package com.vandrushko.domain.repository
+package com.vandrushko.ui.fragments.contacts.adapters
 
 import android.view.View
-import com.vandrushko.domain.dataclass.Contact
+import com.vandrushko.data.model.Contact
 
 
 interface IContactsRecyclerViewAdapter {

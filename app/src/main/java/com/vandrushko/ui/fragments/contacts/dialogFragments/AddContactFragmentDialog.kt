@@ -2,15 +2,13 @@ package com.vandrushko.ui.fragments.contacts.dialogFragments
 
 import android.app.Dialog
 import android.os.Bundle
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
 import com.vandrushko.R
 import com.vandrushko.databinding.ContactsAddFragmentDialofBinding
-import com.vandrushko.domain.dataclass.Contact
+import com.vandrushko.data.model.Contact
 import com.vandrushko.ui.fragments.contacts.ContactViewModel
 import com.vandrushko.ui.utils.ext.loadImage
 
@@ -51,16 +49,19 @@ open class AddContactFragmentDialog :
     }
 
 
-
     private fun setButtonSaveOnClickListener() {
         with(binding) {
             btnSave.setOnClickListener {
                 viewModel.addContact(
-                    Contact(
-                        tiFullName.editText?.text.toString(),
-                        tiCareer.editText?.text.toString(),
-                        imageUrl
-                    ), viewModel.contactsList.value?.size ?: 0
+                    Contact().apply {
+                        name = tiFullName.editText?.text.toString()
+                        career = tiCareer.editText?.text.toString()
+                        email = tiEmail.editText?.text.toString()
+                        image = imageUrl
+                        phone = tiPhone.editText?.text.toString()
+                        address = tiAddress.editText?.text.toString()
+                        birthday = tiBirth.editText?.text.toString()
+                    }, viewModel.contactsList.value?.size ?: 0
                 )
                 dismiss()
             }

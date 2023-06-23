@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.vandrushko.data.LocalRepositoryData
-import com.vandrushko.domain.dataclass.Contact
+import com.vandrushko.data.model.Contact
 import java.io.Serializable
 
 class ContactViewModel : ViewModel(), Serializable {

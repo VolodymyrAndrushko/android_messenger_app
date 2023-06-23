@@ -9,6 +9,11 @@ fun ImageView.loadImage(image: String? = null) {
         .load(image)
         .centerCrop()
         .circleCrop()
-        .error(R.drawable.ic_profile_default_photo)
+        .error(
+            Glide.with(this)
+                .load(R.drawable.ic_default_profile_photo)
+                .centerCrop()
+                .circleCrop()
+        )
         .into(this)
 }

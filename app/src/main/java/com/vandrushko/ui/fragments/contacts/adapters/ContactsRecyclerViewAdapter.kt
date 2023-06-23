@@ -8,18 +8,14 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import com.bumptech.glide.request.RequestOptions
 import com.vandrushko.R
 import com.vandrushko.databinding.ContactsRecyclerViewRowBinding
-import com.vandrushko.domain.dataclass.Contact
-import com.vandrushko.domain.repository.IContactsRecyclerViewAdapter
+import com.vandrushko.data.model.Contact
 import com.vandrushko.ui.fragments.Configs
 import com.vandrushko.ui.fragments.contacts.ContactsFragment
 import com.vandrushko.ui.fragments.contacts.adapters.diff.ContactDiffCallback
 import com.vandrushko.ui.utils.ext.hide
+import com.vandrushko.ui.utils.ext.loadImage
 import com.vandrushko.ui.utils.ext.show
 
 class ContactsRecyclerViewAdapter(
@@ -51,7 +47,7 @@ class ContactsRecyclerViewAdapter(
     ) {
         setTextViews(binding, contact)
 
-        setImage(binding, contact)
+        binding.ivProfilePhoto.loadImage(contact.image)
 
         setDeleteButtonOnClickListener(binding, position, contact)
 
@@ -61,24 +57,10 @@ class ContactsRecyclerViewAdapter(
     private fun setTextViews(binding: ContactsRecyclerViewRowBinding, contact: Contact) {
         with(binding) {
             with(contact) {
-                tvFullName.text = fullName
+                tvFullName.text = name
                 tvCareer.text = career
             }
         }
-    }
-
-    private fun setImage(binding: ContactsRecyclerViewRowBinding, contact: Contact) {
-        val localDrawable = R.drawable.ic_profile_default_photo
-
-        Glide
-            .with(context)
-            .load(contact.image)
-            .apply(
-                RequestOptions().centerCrop().transform(CircleCrop())
-                    .placeholder(localDrawable)
-                    .error(localDrawable).diskCacheStrategy(DiskCacheStrategy.ALL)
-            )
-            .into(binding.ivProfilePhoto)
     }
 
     private fun setDeleteButtonOnClickListener(
@@ -206,6 +188,7 @@ class ContactsRecyclerViewAdapter(
 
         if (listener.isMultiselectModeActivated()) {
             binding.checkboxContacts.show()
+            binding.ivDeleteButton.hide()
             if (selectedContactsList.value.orEmpty()
                     .contains(contact) || selectedItemIndex == position
             ) {

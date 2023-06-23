@@ -9,9 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.vandrushko.R
+import com.vandrushko.data.model.Contact
 import com.vandrushko.databinding.FragmentContactsBinding
-import com.vandrushko.domain.dataclass.Contact
-import com.vandrushko.domain.repository.IContactsRecyclerViewAdapter
+
+import com.vandrushko.ui.fragments.contacts.adapters.IContactsRecyclerViewAdapter
 import com.vandrushko.ui.fragments.contacts.adapters.ContactsRecyclerViewAdapter
 import com.vandrushko.ui.fragments.pager.PagerFragmentDirections
 import com.vandrushko.ui.utils.BaseFragment
@@ -196,7 +197,7 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(FragmentContactsB
         if (viewModel.deleteContact(contact)) {
             Snackbar.make(
                 binding.recyclerViewContacts,
-                getString(R.string.deletedContact, contact.fullName),
+                getString(R.string.deletedContact, contact.name),
                 Snackbar.LENGTH_LONG
             ).setAction(getString(R.string.restore)) {
                 viewModel.addContact(contact, position)
