@@ -3,22 +3,20 @@ package com.vandrushko.ui.fragments.profile
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
-import com.vandrushko.R
 import com.vandrushko.databinding.FragmentDetailViewBinding
-import com.vandrushko.domain.dataclass.Contact
+import com.vandrushko.data.model.Contact
 import com.vandrushko.ui.fragments.Configs
 import com.vandrushko.ui.utils.BaseFragment
+import com.vandrushko.ui.utils.ext.loadImage
+import com.vandrushko.ui.utils.ext.setTransparentIfNotPresentInContact
 
-class ProfileFragment : BaseFragment<FragmentDetailViewBinding>(FragmentDetailViewBinding::inflate) {
+class ProfileFragment :
+    BaseFragment<FragmentDetailViewBinding>(FragmentDetailViewBinding::inflate) {
     private lateinit var contact: Contact
     private val args: ProfileFragmentArgs by navArgs<ProfileFragmentArgs>()
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,7 +26,6 @@ class ProfileFragment : BaseFragment<FragmentDetailViewBinding>(FragmentDetailVi
         setSharedElementsTransition()
         setProfile()
         setListeners()
-
     }
 
     private fun setSharedElementsTransition() {
@@ -47,26 +44,27 @@ class ProfileFragment : BaseFragment<FragmentDetailViewBinding>(FragmentDetailVi
     }
 
     private fun setProfile() {
+        setProfileText()
+        binding.ivProfilePhoto.loadImage(contact.image)
+        setSocialIcons()
+    }
+
+    private fun setProfileText() {
         with(binding) {
-            setProfileText(fullNameText, tvCareerText)
-            setProfileImage(ivProfilePhoto)
+            fullNameText.text = contact.name
+            tvCareerText.text = contact.career
+            tvHomeAddressText.text = contact.address
         }
     }
 
-    private fun setProfileText(fullNameText: AppCompatTextView, tvCareerText: AppCompatTextView) {
-        fullNameText.text = contact.fullName
-        tvCareerText.text = contact.career
-
-    }
-
-    private fun setProfileImage(view: ImageView) {
-        val image = contact.image
-        Glide.with(this@ProfileFragment)
-            .load(image)
-            .centerCrop()
-            .circleCrop()
-            .error(R.drawable.ic_profile_default_photo)
-            .into(view)
+    private fun setSocialIcons() {
+        with(binding) {
+            with(contact) {
+                ivLinkedinIcon.setTransparentIfNotPresentInContact(linkedin)
+                ivInstagramIcon.setTransparentIfNotPresentInContact(instagram)
+                ivFacebookIcon.setTransparentIfNotPresentInContact(facebook)
+            }
+        }
     }
 
     private fun setListeners() {

@@ -18,7 +18,7 @@
         android:label="ProfileFragment">
         <argument
             android:name="contact"
-            app:argType="com.vandrushko.domain.dataclass.Contact" />
+            app:argType="com.vandrushko.data.model.Contact" />
     </fragment>
     <fragment
         android:id="@+id/pagerFragment"
@@ -44,6 +44,9 @@
             app:destination="@id/pagerFragment"
 
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_authFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/loadingScreenFragment"
@@ -51,10 +54,21 @@
         android:label="fragment_loading_screen"
         tools:layout="@layout/fragment_loading_screen">
         <action
-            android:id="@+id/action_loadingScreenFragment_to_authFragment2"
+            android:id="@+id/action_loadingScreenFragment_to_pagerFragment2"
+            app:destination="@id/pagerFragment" />
+        <action
+            android:id="@+id/action_loadingScreenFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.vandrushko.ui.fragments.login.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_authFragment"
             app:destination="@id/authFragment" />
         <action
-            android:id="@+id/action_loadingScreenFragment_to_pagerFragment2"
+            android:id="@+id/action_loginFragment_to_pagerFragment"
             app:destination="@id/pagerFragment" />
     </fragment>
 </navigation>

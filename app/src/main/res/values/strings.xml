@@ -60,5 +60,11 @@
     <string name="full_name">Full name</string>
     <string name="message">MESSAGE</string>
     <string name="contactphototransition" translatable="false">contactPhotoTransition</string>
+    <string name="hello">Hello!</string>
+    <string name="enter_email_password">Enter your email and password below</string>
+    <string name="login">Login</string>
+    <string name="don_t_have_account">Don’t have account?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="forgot_your_password">Forgot your password?</string>
 
 </resources>

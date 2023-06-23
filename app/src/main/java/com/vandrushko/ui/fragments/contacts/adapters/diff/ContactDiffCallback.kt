@@ -1,7 +1,7 @@
 package com.vandrushko.ui.fragments.contacts.adapters.diff
 
 import androidx.recyclerview.widget.DiffUtil
-import com.vandrushko.domain.dataclass.Contact
+import com.vandrushko.data.model.Contact
 
 class ContactDiffCallback(
     private val oldList: List<Contact>,

@@ -28,6 +28,13 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
     private fun setEventListeners(): Unit {
         setRegisterButtonOnClickListener()
         setGoogleButtonOnClickListener()
+        setGoToLoginPageOnClickListener()
+    }
+
+    private fun setGoToLoginPageOnClickListener() {
+        binding.signInText.setOnClickListener {
+            navController.navigate(AuthFragmentDirections.actionAuthFragmentToLoginFragment())
+        }
     }
 
     private fun setGoogleButtonOnClickListener() {

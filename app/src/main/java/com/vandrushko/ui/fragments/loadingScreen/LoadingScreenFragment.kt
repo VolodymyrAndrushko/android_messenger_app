@@ -37,7 +37,7 @@ class LoadingScreenFragment :
                         email
                     )
                 } else {
-                    LoadingScreenFragmentDirections.actionLoadingScreenFragmentToAuthFragment2()
+                    LoadingScreenFragmentDirections.actionLoadingScreenFragmentToLoginFragment()
                 }
             navController.navigate(action)
         }
