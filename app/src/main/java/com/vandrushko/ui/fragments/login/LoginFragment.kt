@@ -8,7 +8,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.vandrushko.data.model.UserRequest
 import com.vandrushko.databinding.FragmentLoginBinding
 import com.vandrushko.ui.utils.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment(
 ) : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
 

@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,8 +18,13 @@ class LoginViewModel @Inject constructor(
     private val contactsRepository: ContactsRepository
 ) : ViewModel() {
 
-    fun loginUser(body: UserRequest) = viewModelScope.launch {
-        val response = contactsRepository.loginUser(body)
-        Log.e("RESPONSE", response.code.toString())
+    fun loginUser(body: UserRequest) = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            val response = contactsRepository.loginUser(body)
+            Log.d("RESPONSE", "response$response")
+        }
+        catch (e: Exception){
+            e.printStackTrace()
+        }
     }
 }
