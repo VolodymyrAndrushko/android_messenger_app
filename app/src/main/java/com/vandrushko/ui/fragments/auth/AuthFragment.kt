@@ -2,14 +2,17 @@ package com.vandrushko.ui.fragments.auth
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputLayout
 import com.vandrushko.R
+import com.vandrushko.data.model.UserRequest
 import com.vandrushko.databinding.FragmentAuthBinding
 import com.vandrushko.ui.fragments.Configs
 import com.vandrushko.ui.utils.BaseFragment
 import com.vandrushko.ui.utils.DataStoreSingleton
 import com.vandrushko.ui.utils.Matcher
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
@@ -17,8 +20,10 @@ import kotlinx.coroutines.launch
 
 private const val AUTO_LOGIN_DATA_KEY = "SAVED_LOGIN_DATA"
 
-
+@AndroidEntryPoint
 class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::inflate) {
+
+    private val viewModel: AuthViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -53,6 +58,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
                     if (binding.rememberCheckBox.isChecked) {
                         saveLoginData(email, password)
                     }
+                    viewModel.registerUser(UserRequest(email,password))
                     loginToApp(email)
                 }
             }
