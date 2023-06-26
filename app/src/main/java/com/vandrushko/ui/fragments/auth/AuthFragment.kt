@@ -3,22 +3,20 @@ package com.vandrushko.ui.fragments.auth
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputLayout
 import com.vandrushko.R
 import com.vandrushko.data.model.UserRequest
 import com.vandrushko.databinding.FragmentAuthBinding
-import com.vandrushko.ui.fragments.Configs
 import com.vandrushko.ui.utils.BaseFragment
 import com.vandrushko.ui.utils.DataStoreSingleton
 import com.vandrushko.ui.utils.Matcher
+import com.vandrushko.ui.utils.ext.showErrorSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-
-
-private const val AUTO_LOGIN_DATA_KEY = "SAVED_LOGIN_DATA"
 
 @AndroidEntryPoint
 class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::inflate) {
@@ -27,10 +25,35 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setObservers()
         setEventListeners()
     }
 
-    private fun setEventListeners(): Unit {
+    private fun setObservers() {
+        lifecycleScope.launch {
+            viewModel.registerState.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect {
+                when (it) {
+                    is AuthViewModel.RegisterState.Success -> {
+                        loginToApp()
+                    }
+
+
+                    is AuthViewModel.RegisterState.Loading -> {
+
+                    }
+
+                    is AuthViewModel.RegisterState.Error -> {
+                        binding.root.showErrorSnackBar(requireContext(), it.error)
+                    }
+
+                    is AuthViewModel.RegisterState.Empty -> Unit
+
+                }
+            }
+        }
+    }
+
+    private fun setEventListeners() {
         setRegisterButtonOnClickListener()
         setGoogleButtonOnClickListener()
         setGoToLoginPageOnClickListener()
@@ -44,55 +67,67 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
 
     private fun setGoogleButtonOnClickListener() {
         binding.googleButton.setOnClickListener {
-            loginToApp(null)
+            loginToApp()
         }
     }
 
-    private fun setRegisterButtonOnClickListener(): Unit {
+    private fun setRegisterButtonOnClickListener() {
         with(binding) {
             registerButton.setOnClickListener {
                 val email: String = emailInputLayout.editText?.text.toString()
                 val password: String = passwordInputLayout.editText?.text.toString()
 
                 if (isValidLoginData(email, password)) {
+                    viewModel.registerUser(UserRequest(email, password))
+
                     if (binding.rememberCheckBox.isChecked) {
-                        saveLoginData(email, password)
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            DataStoreSingleton.saveLoginData(requireContext(), email, password)
+                        }
                     }
-                    viewModel.registerUser(UserRequest(email,password))
-                    loginToApp(email)
                 }
             }
         }
     }
 
     private fun isValidLoginData(email: String, password: String): Boolean {
-        val matcher: Matcher = Matcher()
+        val matcher = Matcher()
+        val isValidEmail = matcher.isValidEmail(email)
+        val isValidPassword = matcher.isValidPassword(password)
         with(binding) {
-            with(matcher) {
-                if (!isValidEmail(email) || !isValidPassword(password)) {
-                    if (!isValidEmail(email)) {
-                        sendTextInputError(
-                            binding.emailInputLayout,
-                            R.string.email_error_message
-                        )
-                    } else {
-                        clearTextInputError(emailInputLayout)
-                    }
-                    if (!isValidPassword(password)) {
-                        sendTextInputError(
-                            passwordInputLayout,
-                            R.string.password_error_message
-                        )
-                    } else {
-                        clearTextInputError(passwordInputLayout)
-                    }
-                    return false
-                } else {
+            when {
+                isValidEmail && isValidPassword -> {
                     clearInputFields()
+                    return true
+                }
+
+                !isValidEmail && !isValidPassword -> {
+                    sendTextInputError(
+                        binding.emailInputLayout,
+                        R.string.email_error_message
+                    )
+                    sendTextInputError(
+                        passwordInputLayout,
+                        R.string.password_error_message
+                    )
+                }
+
+                !isValidEmail -> {
+                    sendTextInputError(
+                        binding.emailInputLayout,
+                        R.string.email_error_message
+                    )
+                }
+
+                else -> {
+                    sendTextInputError(
+                        passwordInputLayout,
+                        R.string.password_error_message
+                    )
                 }
             }
         }
-        return true
+        return false
     }
 
     private fun clearInputFields() {
@@ -100,34 +135,15 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
         clearTextInputError(binding.passwordInputLayout)
     }
 
-    private fun saveLoginData(email: String, password: String) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            DataStoreSingleton.
-            saveStringData(
-                requireContext(),
-                Configs.EMAIL_KEY,
-                email
-            )
-            DataStoreSingleton.
-            saveStringData(
-                requireContext(),
-                Configs.PASSWORD_KEY,
-                password
-            )
-        }
+    private fun loginToApp() {
+        navController.navigate(AuthFragmentDirections.actionAuthFragmentToPagerFragment2())
     }
 
-
-    private fun loginToApp(email: String?) {
-        val action = AuthFragmentDirections.actionAuthFragmentToPagerFragment2(email)
-        navController.navigate(action)
-    }
-
-    private fun sendTextInputError(input: TextInputLayout, emailErrorMessage: Int): Unit {
+    private fun sendTextInputError(input: TextInputLayout, emailErrorMessage: Int) {
         input.error = getString(emailErrorMessage)
     }
 
-    private fun clearTextInputError(input: TextInputLayout): Unit {
+    private fun clearTextInputError(input: TextInputLayout) {
         input.error = null
     }
 

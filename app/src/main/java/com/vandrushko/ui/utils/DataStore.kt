@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.first
 object DataStoreSingleton {
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = Configs.LOGIN_DATA_KEY)
 
-    suspend fun saveStringData(context: Context, key: String, value: String) {
+    private suspend fun saveStringData(context: Context, key: String, value: String) {
         val dataStoreKey = stringPreferencesKey(key)
         context.dataStore.edit { settings ->
             settings[dataStoreKey] = value
@@ -25,5 +25,18 @@ object DataStoreSingleton {
         val preferences = context.dataStore.data.first()
 
         return preferences[dataStoreKey]
+    }
+
+    suspend fun saveLoginData(context: Context, email: String, password: String) {
+        saveStringData(
+            context,
+            Configs.EMAIL_KEY,
+            email
+        )
+        saveStringData(
+            context,
+            Configs.PASSWORD_KEY,
+            password
+        )
     }
 }

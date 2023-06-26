@@ -164,7 +164,7 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(FragmentContactsB
     }
 
     private fun setTouchCallBackListener(): ItemTouchHelper.Callback {
-        return object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+        return object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,

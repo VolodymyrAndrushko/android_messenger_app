@@ -24,10 +24,6 @@
         android:id="@+id/pagerFragment"
         android:name="com.vandrushko.ui.fragments.pager.PagerFragment"
         android:label="PagerFragment">
-        <argument
-            android:name="email"
-            app:argType="string"
-            app:nullable="true" />
         <action
             android:id="@+id/action_pagerFragment_to_addContactFragmentDialog"
             app:destination="@id/addContactFragmentDialog" />
@@ -42,7 +38,6 @@
         <action
             android:id="@+id/action_authFragment_to_pagerFragment2"
             app:destination="@id/pagerFragment"
-
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_authFragment_to_loginFragment"
