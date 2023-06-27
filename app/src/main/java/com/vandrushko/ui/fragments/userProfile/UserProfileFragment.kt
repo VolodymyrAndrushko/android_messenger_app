@@ -8,7 +8,7 @@ import com.vandrushko.ui.utils.Parser
 import com.vandrushko.ui.utils.ext.changePageTo
 import com.vandrushko.ui.utils.ext.loadImage
 
-private const val CONTACTS_PAGE_INDEX = 1
+private const val CONTACTS_PAGE_INDEX = 1   // TODO move this fragment to package with adapter, otherwise it make no sense
 
 class UserProfileFragment :
     BaseFragment<FragmentUserProfileBinding>(FragmentUserProfileBinding::inflate) {

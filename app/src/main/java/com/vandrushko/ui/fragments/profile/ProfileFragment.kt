@@ -32,7 +32,7 @@ class ProfileFragment : BaseFragment<FragmentDetailViewBinding>(FragmentDetailVi
     }
 
     private fun setSharedElementsTransition() {
-        binding.ivProfilePhoto.transitionName = Configs.TRANSITION_NAME_IMAGE + "${contact.id}"
+        binding.ivProfilePhoto.transitionName = Configs.TRANSITION_NAME_IMAGE + "${contact.id}" // TODO why not just Configs.TRANSITION_NAME_IMAGE+contact.id ?
         binding.fullNameText.transitionName = Configs.TRANSITION_NAME_FULL_NAME + "${contact.id}"
         binding.tvCareerText.transitionName = Configs.TRANSITION_NAME_CAREER + "${contact.id}"
 
@@ -42,7 +42,7 @@ class ProfileFragment : BaseFragment<FragmentDetailViewBinding>(FragmentDetailVi
 
         sharedElementEnterTransition = animation
         sharedElementReturnTransition = animation
-        postponeEnterTransition()
+        postponeEnterTransition()       // TODO why postpone and then immediately start?
         startPostponedEnterTransition()
     }
 
@@ -61,7 +61,7 @@ class ProfileFragment : BaseFragment<FragmentDetailViewBinding>(FragmentDetailVi
 
     private fun setProfileImage(view: ImageView) {
         val image = contact.image
-        Glide.with(this@ProfileFragment)
+        Glide.with(this@ProfileFragment)    // TODO why u r not using your own ImageView.loadImage ext function?
             .load(image)
             .centerCrop()
             .circleCrop()
@@ -76,7 +76,7 @@ class ProfileFragment : BaseFragment<FragmentDetailViewBinding>(FragmentDetailVi
 
     private fun setNavigationBackListener() {
         binding.navigationBack.setOnClickListener {
-            findNavController().navigateUp()
+            findNavController().navigateUp()        // TODO you already have navController in base fragment
         }
     }
 

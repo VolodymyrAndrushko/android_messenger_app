@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import java.util.UUID
 
-@Parcelize
+@Parcelize      // TODO deprecated
 data class Contact(
     val fullName: String,
     val career: String,

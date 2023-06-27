@@ -15,7 +15,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 
-private const val AUTO_LOGIN_DATA_KEY = "SAVED_LOGIN_DATA"
+private const val AUTO_LOGIN_DATA_KEY = "SAVED_LOGIN_DATA"      // TODO remove
 
 
 class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::inflate) {
@@ -88,7 +88,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
     }
 
     private fun saveLoginData(email: String, password: String) {
-        lifecycleScope.launch(Dispatchers.IO) {
+        lifecycleScope.launch(Dispatchers.IO) { // TODO this should be in a viewModel, also either block UI until saving finishes or use services
             DataStoreSingleton.
             saveStringData(
                 requireContext(),

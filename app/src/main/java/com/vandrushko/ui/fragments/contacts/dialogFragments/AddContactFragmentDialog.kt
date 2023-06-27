@@ -29,7 +29,7 @@ open class AddContactFragmentDialog :
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = ContactsAddFragmentDialofBinding.inflate(layoutInflater)
 
-        viewModel = args.viewModel
+        viewModel = args.viewModel      // TODO ??!!???
 
         return activity?.let {
             val builder = AlertDialog.Builder(it)
@@ -87,6 +87,6 @@ open class AddContactFragmentDialog :
 
     companion object {
         @JvmStatic
-        val TAG: String = AddContactFragmentDialog::class.java.name
+        val TAG: String = AddContactFragmentDialog::class.java.name     // TODO never used
     }
 }

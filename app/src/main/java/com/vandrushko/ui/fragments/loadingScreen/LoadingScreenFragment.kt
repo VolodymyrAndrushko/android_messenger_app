@@ -21,7 +21,7 @@ class LoadingScreenFragment :
     }
 
     private fun loginAttempt() {
-        lifecycleScope.launch {
+        lifecycleScope.launch { // TODO this should be in a viewModel
             val email = DataStoreSingleton.readStringData(
                 requireContext(),
                 Configs.EMAIL_KEY,
@@ -50,6 +50,6 @@ class LoadingScreenFragment :
 
     override fun onDestroy() {
         super.onDestroy()
-        lifecycleScope.cancel()
+        lifecycleScope.cancel()     // TODO why??????
     }
 }

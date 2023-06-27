@@ -49,9 +49,9 @@ class ContactsRecyclerViewAdapter(
         contact: Contact,
         position: Int
     ) {
-        setTextViews(binding, contact)
+        setTextViews(binding, contact)  // TODO it's not a listener
 
-        setImage(binding, contact)
+        setImage(binding, contact)  // TODO it's not a listener
 
         setDeleteButtonOnClickListener(binding, position, contact)
 
@@ -70,7 +70,7 @@ class ContactsRecyclerViewAdapter(
     private fun setImage(binding: ContactsRecyclerViewRowBinding, contact: Contact) {
         val localDrawable = R.drawable.ic_profile_default_photo
 
-        Glide
+        Glide       // TODO why u r not using your own ImageView.loadImage ext function?
             .with(context)
             .load(contact.image)
             .apply(
@@ -155,7 +155,7 @@ class ContactsRecyclerViewAdapter(
         listener.removeSelectedItem(contact)
     }
 
-    private fun isChecked(checkboxContacts: CheckBox): Boolean = checkboxContacts.isChecked
+    private fun isChecked(checkboxContacts: CheckBox): Boolean = checkboxContacts.isChecked // TODO why?????
 
     private fun viewDetailView(binding: ContactsRecyclerViewRowBinding, contact: Contact) {
         with(binding) {
@@ -181,7 +181,7 @@ class ContactsRecyclerViewAdapter(
 
     private fun activateMultiSelectMode(position: Int) {
         listener.turnOnSelectionMode()
-        listener.showDeleteButton()
+        listener.showDeleteButton()     // TODO encapsulate
         selectedItemIndex = position
         notifyDataSetChanged()
     }
@@ -200,7 +200,7 @@ class ContactsRecyclerViewAdapter(
 
     override fun getItemCount(): Int = contactsList.size
 
-    override fun onBindViewHolder(holder: ContactsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ContactsViewHolder, position: Int) {  // TODO binding logic should be inside ViewHolder
         val contact = contactsList[position]
         val binding = holder.binding
 

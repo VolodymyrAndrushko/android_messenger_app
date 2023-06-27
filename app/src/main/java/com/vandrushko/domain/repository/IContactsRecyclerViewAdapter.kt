@@ -4,7 +4,7 @@ import android.view.View
 import com.vandrushko.domain.dataclass.Contact
 
 
-interface IContactsRecyclerViewAdapter {
+interface IContactsRecyclerViewAdapter {        // TODO UI interface in domain?
     fun deleteContact(contact: Contact, position: Int)
     fun viewDetails(contact: Contact, transitionPairs: Array<Pair<View, String>>)
     fun showDeleteButton()

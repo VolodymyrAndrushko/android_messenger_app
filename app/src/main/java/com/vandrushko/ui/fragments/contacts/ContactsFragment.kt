@@ -24,9 +24,9 @@ private const val MY_PROFILE_PAGE_INDEX = 0
 
 class ContactsFragment : BaseFragment<FragmentContactsBinding>(FragmentContactsBinding::inflate) {
 
-    private lateinit var viewModel: ContactViewModel
+    private lateinit var viewModel: ContactViewModel // TODO why not just by viewModels()
 
-    private val listener = object : IContactsRecyclerViewAdapter, Serializable {
+    private val listener = object : IContactsRecyclerViewAdapter, Serializable {    // TODO why Serializable?
         override fun deleteContact(contact: Contact, position: Int) {
             deleteItemWithRestore(contact, position)
         }
@@ -80,7 +80,7 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(FragmentContactsB
 
     override fun onResume() {
         super.onResume()
-        postponeEnterTransition()
+        postponeEnterTransition()       // TODO why postpone and then immediately start?
         startPostponedEnterTransition()
 
     }
@@ -104,7 +104,7 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(FragmentContactsB
                 viewModel.deleteSelectedContacts()
                 viewModel.turnOffSelectionMode()
                 binding.buttonDeleteSelected.animateVisibility(View.GONE)
-                setRecyclerView()
+                setRecyclerView()       // TODO why?
             }
         }
     }
@@ -135,17 +135,17 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(FragmentContactsB
         setTouchRecycleItemListener()
         binding.recyclerViewContacts.layoutManager = LinearLayoutManager(context)
 
-        viewModel = setProvider(this)
+        viewModel = setProvider(this)   // TODO don't
 
         val adapter = ContactsRecyclerViewAdapter(this, listener, viewModel.selectedContactsList)
         binding.recyclerViewContacts.adapter = adapter
 
         setObserver(viewModel, adapter)
 
-        startPostponedEnterTransition()
+        startPostponedEnterTransition()     // TODO ?
     }
 
-    private fun setTouchRecycleItemListener() {
+    private fun setTouchRecycleItemListener() {     // TODO too much decomposition
         val itemTouchCallback = setTouchCallBackListener()
         ItemTouchHelper(itemTouchCallback).attachToRecyclerView(binding.recyclerViewContacts)
     }
@@ -156,13 +156,13 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(FragmentContactsB
         )[ContactViewModel::class.java]
     }
 
-    private fun setObserver(viewModel: ContactViewModel, adapter: ContactsRecyclerViewAdapter) {
+    private fun setObserver(viewModel: ContactViewModel, adapter: ContactsRecyclerViewAdapter) { // TODO too much decomposition
         viewModel.contactsList.observe(viewLifecycleOwner) {
             adapter.updateList(it)
         }
     }
 
-    private fun setTouchCallBackListener(): ItemTouchHelper.Callback {
+    private fun setTouchCallBackListener(): ItemTouchHelper.Callback {      // TODO it's not "set", it's "get"
         return object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -172,7 +172,7 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(FragmentContactsB
                 return false
             }
 
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {    // TODO remove swipe in multiselect mode
                 val position = viewHolder.adapterPosition
                 val contact = viewModel.contactsList.value.orEmpty()[position]
                 deleteItemWithRestore(contact, position)

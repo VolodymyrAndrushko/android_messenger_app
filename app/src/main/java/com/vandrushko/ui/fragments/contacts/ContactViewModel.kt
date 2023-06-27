@@ -7,7 +7,7 @@ import com.vandrushko.data.LocalRepositoryData
 import com.vandrushko.domain.dataclass.Contact
 import java.io.Serializable
 
-class ContactViewModel : ViewModel(), Serializable {
+class ContactViewModel : ViewModel(), Serializable {        // TODO why Serializable?
 
     private val _contactsList = MutableLiveData<List<Contact>>()
     private val _selectedContactsList = MutableLiveData<List<Contact>>()
@@ -68,7 +68,7 @@ class ContactViewModel : ViewModel(), Serializable {
         for (contact in _selectedContactsList.value.orEmpty()) {
             deleteSelectedContact(contact)
             deleteContact(contact)
-            _selectedContactsList.value = emptyList()
+            _selectedContactsList.value = emptyList()       // TODO emptying list in a loop
         }
     }
 

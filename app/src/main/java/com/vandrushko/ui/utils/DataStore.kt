@@ -10,7 +10,7 @@ import com.vandrushko.ui.fragments.Configs
 import kotlinx.coroutines.flow.first
 
 
-object DataStoreSingleton {
+object DataStoreSingleton { // TODO DataStore... key word is "data"
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = Configs.LOGIN_DATA_KEY)
 
     suspend fun saveStringData(context: Context, key: String, value: String) {
