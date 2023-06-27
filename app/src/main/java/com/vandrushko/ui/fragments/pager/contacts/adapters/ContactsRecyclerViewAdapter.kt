@@ -1,4 +1,4 @@
-package com.vandrushko.ui.fragments.contacts.adapters
+package com.vandrushko.ui.fragments.pager.contacts.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +12,8 @@ import com.vandrushko.R
 import com.vandrushko.databinding.ContactsRecyclerViewRowBinding
 import com.vandrushko.data.model.Contact
 import com.vandrushko.ui.fragments.Configs
-import com.vandrushko.ui.fragments.contacts.ContactsFragment
-import com.vandrushko.ui.fragments.contacts.adapters.diff.ContactDiffCallback
+import com.vandrushko.ui.fragments.pager.contacts.ContactsFragment
+import com.vandrushko.ui.fragments.pager.contacts.adapters.diff.ContactDiffCallback
 import com.vandrushko.ui.utils.ext.hide
 import com.vandrushko.ui.utils.ext.loadImage
 import com.vandrushko.ui.utils.ext.show

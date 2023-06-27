@@ -1,4 +1,4 @@
-package com.vandrushko.ui.fragments.contacts.adapters
+package com.vandrushko.ui.fragments.pager.contacts.adapters
 
 import android.view.View
 import com.vandrushko.data.model.Contact

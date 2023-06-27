@@ -1,4 +1,4 @@
-package com.vandrushko.ui.fragments.contacts.adapters.diff
+package com.vandrushko.ui.fragments.pager.contacts.adapters.diff
 
 import androidx.recyclerview.widget.DiffUtil
 import com.vandrushko.data.model.Contact

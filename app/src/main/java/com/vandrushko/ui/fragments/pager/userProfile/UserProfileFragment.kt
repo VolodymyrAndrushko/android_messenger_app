@@ -1,4 +1,4 @@
-package com.vandrushko.ui.fragments.userProfile
+package com.vandrushko.ui.fragments.pager.userProfile
 
 import android.os.Bundle
 import android.view.View

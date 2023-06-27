@@ -1,4 +1,4 @@
-package com.vandrushko.ui.fragments.contacts.dialogFragments
+package com.vandrushko.ui.fragments.pager.contacts.dialogFragments
 
 import android.app.Dialog
 import android.os.Bundle
@@ -9,7 +9,8 @@ import androidx.navigation.fragment.navArgs
 import com.vandrushko.R
 import com.vandrushko.databinding.ContactsAddFragmentDialofBinding
 import com.vandrushko.data.model.Contact
-import com.vandrushko.ui.fragments.contacts.ContactViewModel
+import com.vandrushko.ui.fragments.contacts.dialogFragments.AddContactFragmentDialogArgs
+import com.vandrushko.ui.fragments.pager.contacts.ContactViewModel
 import com.vandrushko.ui.utils.ext.loadImage
 
 open class AddContactFragmentDialog :

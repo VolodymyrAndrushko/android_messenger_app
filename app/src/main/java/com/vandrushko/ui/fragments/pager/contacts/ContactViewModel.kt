@@ -1,4 +1,4 @@
-package com.vandrushko.ui.fragments.contacts
+package com.vandrushko.ui.fragments.pager.contacts
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
