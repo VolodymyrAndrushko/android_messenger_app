@@ -17,7 +17,7 @@ import com.vandrushko.ui.fragments.contacts.adapters.ContactsRecyclerViewAdapter
 import com.vandrushko.ui.fragments.pager.PagerFragmentDirections
 import com.vandrushko.ui.utils.BaseFragment
 import com.vandrushko.ui.utils.ext.animateVisibility
-import com.vandrushko.ui.utils.ext.changePageTo
+import com.vandrushko.ui.utils.changePageTo
 import java.io.Serializable
 
 

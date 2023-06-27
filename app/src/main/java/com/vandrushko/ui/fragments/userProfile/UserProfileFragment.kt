@@ -5,7 +5,7 @@ import android.view.View
 import com.vandrushko.databinding.FragmentUserProfileBinding
 import com.vandrushko.ui.utils.BaseFragment
 import com.vandrushko.ui.utils.Parser
-import com.vandrushko.ui.utils.ext.changePageTo
+import com.vandrushko.ui.utils.changePageTo
 import com.vandrushko.ui.utils.ext.loadImage
 
 private const val CONTACTS_PAGE_INDEX = 1
@@ -25,7 +25,7 @@ class UserProfileFragment :
 
     private fun setProfileFullName() {
         val email: String? = arguments?.getString("email")
-        val fullName: String? = Parser().parseEmail(email)
+        val fullName: String? = Parser.parseEmail(email)
 
         if (fullName != null) binding.fullNameText.text = fullName
     }

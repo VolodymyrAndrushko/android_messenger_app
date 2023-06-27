@@ -15,7 +15,6 @@ import com.vandrushko.ui.utils.Matcher
 import com.vandrushko.ui.utils.ext.showErrorSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -91,9 +90,8 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
     }
 
     private fun isValidLoginData(email: String, password: String): Boolean {
-        val matcher = Matcher()
-        val isValidEmail = matcher.isValidEmail(email)
-        val isValidPassword = matcher.isValidPassword(password)
+        val isValidEmail = Matcher.isValidEmail(email)
+        val isValidPassword = Matcher.isValidPassword(password)
         with(binding) {
             when {
                 isValidEmail && isValidPassword -> {
@@ -147,8 +145,4 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
         input.error = null
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        lifecycleScope.cancel()
-    }
 }

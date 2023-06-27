@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.View
 import android.widget.Toast
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.vandrushko.databinding.FragmentDetailViewBinding
 import com.vandrushko.data.model.Contact
@@ -16,7 +15,7 @@ import com.vandrushko.ui.utils.ext.setTransparentIfNotPresentInContact
 class ProfileFragment :
     BaseFragment<FragmentDetailViewBinding>(FragmentDetailViewBinding::inflate) {
     private lateinit var contact: Contact
-    private val args: ProfileFragmentArgs by navArgs<ProfileFragmentArgs>()
+    private val args: ProfileFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,9 +28,9 @@ class ProfileFragment :
     }
 
     private fun setSharedElementsTransition() {
-        binding.ivProfilePhoto.transitionName = Configs.TRANSITION_NAME_IMAGE + "${contact.id}"
-        binding.fullNameText.transitionName = Configs.TRANSITION_NAME_FULL_NAME + "${contact.id}"
-        binding.tvCareerText.transitionName = Configs.TRANSITION_NAME_CAREER + "${contact.id}"
+        binding.ivProfilePhoto.transitionName = Configs.TRANSITION_NAME_IMAGE + contact.id
+        binding.fullNameText.transitionName = Configs.TRANSITION_NAME_FULL_NAME + contact.id
+        binding.tvCareerText.transitionName = Configs.TRANSITION_NAME_CAREER + contact.id
 
         val animation = TransitionInflater.from(context).inflateTransition(
             android.R.transition.move
@@ -39,7 +38,6 @@ class ProfileFragment :
 
         sharedElementEnterTransition = animation
         sharedElementReturnTransition = animation
-        postponeEnterTransition()
         startPostponedEnterTransition()
     }
 
@@ -74,7 +72,7 @@ class ProfileFragment :
 
     private fun setNavigationBackListener() {
         binding.navigationBack.setOnClickListener {
-            findNavController().navigateUp()
+            navController.navigateUp()
         }
     }
 

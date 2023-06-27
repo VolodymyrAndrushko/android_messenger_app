@@ -1,4 +1,4 @@
-package com.vandrushko.ui.utils.ext
+package com.vandrushko.ui.utils
 
 import android.app.Activity
 import androidx.viewpager2.widget.ViewPager2
