@@ -2,10 +2,11 @@ package com.vandrushko.ui.fragments.pager.userProfile
 
 import android.os.Bundle
 import android.view.View
+import androidx.viewpager2.widget.ViewPager2
+import com.vandrushko.R
 import com.vandrushko.databinding.FragmentUserProfileBinding
 import com.vandrushko.ui.utils.BaseFragment
 import com.vandrushko.ui.utils.Parser
-import com.vandrushko.ui.utils.changePageTo
 import com.vandrushko.ui.utils.ext.loadImage
 
 private const val CONTACTS_PAGE_INDEX = 1
@@ -19,7 +20,9 @@ class UserProfileFragment :
 
     private fun setGoToContactsOnClickListener() {
         binding.viewContactsButton.setOnClickListener {
-            changePageTo(requireActivity(), CONTACTS_PAGE_INDEX)
+            val viewPager = requireActivity().findViewById<ViewPager2>(R.id.viewPager)
+            viewPager.currentItem = CONTACTS_PAGE_INDEX
+
         }
     }
 

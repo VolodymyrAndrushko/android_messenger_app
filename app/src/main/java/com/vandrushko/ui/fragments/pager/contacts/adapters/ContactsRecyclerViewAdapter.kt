@@ -21,16 +21,42 @@ import com.vandrushko.ui.utils.ext.show
 class ContactsRecyclerViewAdapter(
     private val context: ContactsFragment,
     private val listener: IContactsRecyclerViewAdapter,
-    private val selectedContactsList: LiveData<List<Contact>>,
+    private val selectedContactsList: LiveData<List<Pair<Contact, Int>>>,
 ) : RecyclerView.Adapter<ContactsRecyclerViewAdapter.ContactsViewHolder>() {
     private val contactsList = ArrayList<Contact>()
 
-    private var selectedItemIndex = -1
+    inner class ContactsViewHolder(private val binding: ContactsRecyclerViewRowBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+            fun bindTo(contact: Contact){
+                setTextViews(binding, contact)
 
-    private var transitionPairs = emptyArray<Pair<View, String>>()
+                when(listener.isMultiselectModeActivated()){
+                    true -> {
+                        binding.checkboxContacts.show()
+                        binding.ivDeleteButton.hide()
 
-    inner class ContactsViewHolder(val binding: ContactsRecyclerViewRowBinding) :
-        RecyclerView.ViewHolder(binding.root)
+                        if (selectedContactsList.value.orEmpty()
+                                .contains(contact to adapterPosition)
+                        ) {
+                            selectItem(binding, contact, adapterPosition)
+                        }
+                    }
+                    else -> {
+                        binding.checkboxContacts.hide()
+                        binding.ivDeleteButton.show()
+                        binding.cardConstraintLayout.setBackgroundColor(
+                            ContextCompat.getColor(
+                                context.requireContext(),
+                                R.color.background_color
+                            )
+                        )
+                    }
+                }
+                binding.ivProfilePhoto.loadImage(contact.image)
+
+                setListeners(binding, contact, adapterPosition)
+            }
+        }
 
     fun updateList(newList: List<Contact>) {
         val diffResult = DiffUtil.calculateDiff(ContactDiffCallback(contactsList, newList))
@@ -45,12 +71,7 @@ class ContactsRecyclerViewAdapter(
         contact: Contact,
         position: Int
     ) {
-        setTextViews(binding, contact)
-
-        binding.ivProfilePhoto.loadImage(contact.image)
-
         setDeleteButtonOnClickListener(binding, position, contact)
-
         setCardViewOnClickListener(binding, contact, position)
     }
 
@@ -84,17 +105,17 @@ class ContactsRecyclerViewAdapter(
             cardView.setOnClickListener {
                 if (!listener.isMultiselectModeActivated()) {
                     viewDetailView(this, contact)
-                } else if (isChecked(checkboxContacts)) {
-                    unselectItem(this, contact)
+                } else if (checkboxContacts.isChecked) {
+                    unselectItem(this, contact, position)
                     hideIfNoItemSelected()
                 } else {
-                    selectItem(this, contact)
+                    selectItem(this, contact, position)
                 }
 
             }
             cardView.setOnLongClickListener {
                 if (!listener.isMultiselectModeActivated()) {
-                    activateMultiSelectMode(position)
+                    activateMultiSelectMode(contact,position)
                 }
                 true
             }
@@ -105,12 +126,11 @@ class ContactsRecyclerViewAdapter(
     private fun hideIfNoItemSelected() {
         if (selectedContactsList.value?.isEmpty() == true) {
             listener.turnOffSelectionMode()
-            listener.hideDeleteButton()
             notifyDataSetChanged()
         }
     }
 
-    private fun selectItem(binding: ContactsRecyclerViewRowBinding, contact: Contact) {
+    private fun selectItem(binding: ContactsRecyclerViewRowBinding, contact: Contact, position: Int) {
         with(binding) {
             checkboxContacts.show()
             checkboxContacts.isChecked = true
@@ -121,10 +141,10 @@ class ContactsRecyclerViewAdapter(
                 )
             )
         }
-        listener.addSelectedItem(contact)
+        listener.addSelectedItem(contact, position)
     }
 
-    private fun unselectItem(binding: ContactsRecyclerViewRowBinding, contact: Contact) {
+    private fun unselectItem(binding: ContactsRecyclerViewRowBinding, contact: Contact, position: Int) {
         with(binding) {
             checkboxContacts.isChecked = false
             cardConstraintLayout.setBackgroundColor(
@@ -134,14 +154,12 @@ class ContactsRecyclerViewAdapter(
                 )
             )
         }
-        listener.removeSelectedItem(contact)
+        listener.removeSelectedItem(contact, position)
     }
-
-    private fun isChecked(checkboxContacts: CheckBox): Boolean = checkboxContacts.isChecked
 
     private fun viewDetailView(binding: ContactsRecyclerViewRowBinding, contact: Contact) {
         with(binding) {
-            transitionPairs = arrayOf(
+            val transitionPairs = arrayOf(
                 setTransitionName(
                     ivProfilePhoto,
                     Configs.TRANSITION_NAME_IMAGE + contact.id
@@ -161,10 +179,9 @@ class ContactsRecyclerViewAdapter(
         }
     }
 
-    private fun activateMultiSelectMode(position: Int) {
+    private fun activateMultiSelectMode(contact: Contact,position: Int) {
         listener.turnOnSelectionMode()
-        listener.showDeleteButton()
-        selectedItemIndex = position
+        listener.addSelectedItem(contact,position)
         notifyDataSetChanged()
     }
 
@@ -184,19 +201,7 @@ class ContactsRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ContactsViewHolder, position: Int) {
         val contact = contactsList[position]
-        val binding = holder.binding
 
-        if (listener.isMultiselectModeActivated()) {
-            binding.checkboxContacts.show()
-            binding.ivDeleteButton.hide()
-            if (selectedContactsList.value.orEmpty()
-                    .contains(contact) || selectedItemIndex == position
-            ) {
-                selectItem(binding, contact)
-            }
-        } else {
-            binding.checkboxContacts.hide()
-        }
-        setListeners(binding, contact, position)
+        holder.bindTo(contact)
     }
 }

@@ -7,11 +7,7 @@
     <dialog
         android:id="@+id/addContactFragmentDialog"
         android:name="com.vandrushko.ui.fragments.pager.contacts.dialogFragments.AddContactFragmentDialog"
-        android:label="AddContactFragmentDialog">
-        <argument
-            android:name="viewModel"
-            app:argType="com.vandrushko.ui.fragments.contacts.ContactViewModel" />
-    </dialog>
+        android:label="AddContactFragmentDialog"/>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.vandrushko.ui.fragments.profile.ProfileFragment"

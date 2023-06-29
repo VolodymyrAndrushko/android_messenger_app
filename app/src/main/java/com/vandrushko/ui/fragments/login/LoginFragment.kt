@@ -8,11 +8,9 @@ import androidx.lifecycle.lifecycleScope
 import com.vandrushko.R
 import com.vandrushko.data.model.UserRequest
 import com.vandrushko.databinding.FragmentLoginBinding
-import com.vandrushko.ui.fragments.login.LoginViewModel.LoginState
-import com.vandrushko.ui.fragments.login.LoginViewModel.LoginState.Loading
-import com.vandrushko.ui.fragments.login.LoginViewModel.LoginState.Success
 import com.vandrushko.ui.utils.BaseFragment
-import com.vandrushko.ui.utils.DataStoreSingleton
+import com.vandrushko.data.DataStoreSingleton
+import com.vandrushko.domain.repository.utils.JobState
 import com.vandrushko.ui.utils.ext.hide
 import com.vandrushko.ui.utils.ext.show
 import com.vandrushko.ui.utils.ext.showErrorSnackBar
@@ -37,15 +35,15 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             viewModel.userStateFlow.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect {
                 hideLoading()
                 when (it) {
-                    is Success -> {
+                    is JobState.Success -> {
                         loginToApp()
                     }
 
-                    is LoginState.Error -> {
+                    is JobState.Error -> {
                         binding.root.showErrorSnackBar(requireContext(),it.error)
                     }
 
-                    is Loading -> {
+                    is JobState.Loading -> {
                         showLoading()
                     }
 

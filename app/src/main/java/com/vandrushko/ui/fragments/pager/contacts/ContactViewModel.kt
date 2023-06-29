@@ -5,16 +5,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.vandrushko.data.LocalRepositoryData
 import com.vandrushko.data.model.Contact
-import java.io.Serializable
+import com.vandrushko.domain.repository.ContactsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ContactViewModel : ViewModel(), Serializable {
+@HiltViewModel
+class ContactViewModel @Inject constructor(
+    private val contactsRepository: ContactsRepository
+) : ViewModel() {
 
     private val _contactsList = MutableLiveData<List<Contact>>()
-    private val _selectedContactsList = MutableLiveData<List<Contact>>()
+    private val _selectedContactsList = MutableLiveData<List<Pair<Contact,Int>>>()
     private var isMultiselectModeActivated = MutableLiveData(false)
 
     val contactsList: LiveData<List<Contact>> = _contactsList
-    val selectedContactsList: LiveData<List<Contact>> = _selectedContactsList
+    val selectedContactsList: LiveData<List<Pair<Contact,Int>>> = _selectedContactsList
 
     init {
         _contactsList.postValue(LocalRepositoryData().getLocalContactsList())
@@ -44,32 +49,42 @@ class ContactViewModel : ViewModel(), Serializable {
         }
     }
 
-    fun deleteSelectedContact(contact: Contact): Boolean {
+    fun addContacts(pairsList: List<Pair<Contact,Int>>?){
+        if (pairsList!=null){
+            for(pair in pairsList){
+                addContact(pair.first,pair.second)
+            }
+        }
+    }
+
+    fun deleteSelectedContact(pair: Pair<Contact, Int>): Boolean {
         val list = _selectedContactsList
-        if (list.value?.contains(contact) == true) {
+        if (list.value?.contains(pair) == true) {
             val currentContacts = list.value.orEmpty().toMutableList()
-            currentContacts.remove(contact)
+            currentContacts.remove(pair)
             list.value = currentContacts
             return true
         }
         return false
     }
 
-    fun addSelectedContact(contact: Contact) {
+    fun addSelectedContact(pair: Pair<Contact, Int>) {
         val list = _selectedContactsList
-        if (list.value?.contains(contact) == false) {
+        if (list.value?.contains(pair) == false) {
             val currentContacts = list.value.orEmpty().toMutableList()
-            currentContacts.add(contact)
+            currentContacts.add(pair)
             list.value = currentContacts
         }
     }
 
     fun deleteSelectedContacts() {
-        for (contact in _selectedContactsList.value.orEmpty()) {
-            deleteSelectedContact(contact)
-            deleteContact(contact)
-            _selectedContactsList.value = emptyList()
+        isMultiselectModeActivated.value = false
+        for (pair in _selectedContactsList.value.orEmpty()) {
+            deleteSelectedContact(pair)
+            deleteContact(pair.first)
         }
+        _selectedContactsList.value = emptyList()
+        turnOffSelectionMode()
     }
 
     fun turnOnSelectionMode() {

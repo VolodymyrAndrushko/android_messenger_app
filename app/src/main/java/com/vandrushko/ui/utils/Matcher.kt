@@ -8,9 +8,7 @@ private const val PASSWORD_REGEX =
 
 object Matcher {
     fun isValidPassword(password: String?): Boolean =
-        password != null && Regex(PASSWORD_REGEX).find(password) != null && !TextUtils.isEmpty(
-            password
-        )
+        password != null && Regex(PASSWORD_REGEX).find(password) != null && password.isNotEmpty()
 
     fun isValidEmail(email: String?): Boolean =
         email != null && Patterns.EMAIL_ADDRESS.matcher(email)

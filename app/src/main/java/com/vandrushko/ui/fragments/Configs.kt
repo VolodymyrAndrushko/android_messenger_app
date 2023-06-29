@@ -1,6 +1,8 @@
 package com.vandrushko.ui.fragments
 
 object Configs {
+    @JvmStatic
+    val USER_DB_NAME = "user_db"
 
     @JvmStatic
     val TRANSITION_NAME_IMAGE = "TRANSITION_NAME_IMAGE"

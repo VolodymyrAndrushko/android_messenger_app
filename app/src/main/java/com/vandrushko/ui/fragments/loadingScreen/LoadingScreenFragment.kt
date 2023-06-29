@@ -10,7 +10,8 @@ import com.vandrushko.databinding.FragmentLoadingScreenBinding
 import com.vandrushko.ui.fragments.Configs
 import com.vandrushko.ui.fragments.login.LoginViewModel
 import com.vandrushko.ui.utils.BaseFragment
-import com.vandrushko.ui.utils.DataStoreSingleton
+import com.vandrushko.data.DataStoreSingleton
+import com.vandrushko.domain.repository.utils.JobState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
@@ -30,43 +31,27 @@ class LoadingScreenFragment :
         lifecycleScope.launch {
             viewModel.userStateFlow.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect {
                 when (it) {
-                    is LoginViewModel.LoginState.Success -> {
+                    is JobState.Success -> {
                         navController.navigate(LoadingScreenFragmentDirections.actionLoadingScreenFragmentToPagerFragment2())
                     }
 
-                    is LoginViewModel.LoginState.Error -> {
+                    is JobState.Error -> {
                         goToLoginScreen()
                     }
 
-                    is LoginViewModel.LoginState.Loading -> Unit
+                    is JobState.Loading -> Unit
 
-                    is LoginViewModel.LoginState.Empty -> Unit
+                    is JobState.Empty -> Unit
                 }
             }
         }
     }
 
     private fun loginAttempt() {
-        lifecycleScope.launch {
-            val email = DataStoreSingleton.readStringData(
-                requireContext(),
-                Configs.EMAIL_KEY,
-            )
-            val password = DataStoreSingleton.readStringData(
-                requireContext(),
-                Configs.PASSWORD_KEY,
-            )
-
-            viewModel.loginUser(UserRequest(email, password))
-        }
+        viewModel.autoLoginAttempt(requireContext())
     }
 
     private fun goToLoginScreen() {
         navController.navigate(LoadingScreenFragmentDirections.actionLoadingScreenFragmentToLoginFragment())
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        lifecycleScope.cancel()
     }
 }

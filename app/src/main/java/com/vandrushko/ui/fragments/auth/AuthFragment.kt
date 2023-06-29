@@ -5,16 +5,21 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.room.Room
 import com.google.android.material.textfield.TextInputLayout
 import com.vandrushko.R
+import com.vandrushko.data.db.UserDataBase
+import com.vandrushko.data.model.Contact
+import com.vandrushko.data.model.UserData
 import com.vandrushko.data.model.UserRequest
 import com.vandrushko.databinding.FragmentAuthBinding
+import com.vandrushko.domain.repository.utils.JobState
 import com.vandrushko.ui.utils.BaseFragment
-import com.vandrushko.ui.utils.DataStoreSingleton
 import com.vandrushko.ui.utils.Matcher
 import com.vandrushko.ui.utils.ext.showErrorSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -26,26 +31,32 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
 
         setObservers()
         setEventListeners()
+
+//        val db = Room.databaseBuilder(requireContext(), UserDataBase::class.java, "user_db").build()
+//
+//        GlobalScope.launch(Dispatchers.IO) {
+//            db.userDao().insetUserData(UserData(Contact(),"asdasd","asdas12312123"))
+//        }
     }
 
     private fun setObservers() {
         lifecycleScope.launch {
             viewModel.registerState.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect {
                 when (it) {
-                    is AuthViewModel.RegisterState.Success -> {
+                    is JobState.Success -> {
                         loginToApp()
                     }
 
 
-                    is AuthViewModel.RegisterState.Loading -> {
+                    is JobState.Loading -> {
 
                     }
 
-                    is AuthViewModel.RegisterState.Error -> {
+                    is JobState.Error -> {
                         binding.root.showErrorSnackBar(requireContext(), it.error)
                     }
 
-                    is AuthViewModel.RegisterState.Empty -> Unit
+                    is JobState.Empty -> Unit
 
                 }
             }
@@ -77,13 +88,11 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::infl
                 val password: String = passwordInputLayout.editText?.text.toString()
 
                 if (isValidLoginData(email, password)) {
-                    viewModel.registerUser(UserRequest(email, password))
-
-                    if (binding.rememberCheckBox.isChecked) {
-                        lifecycleScope.launch(Dispatchers.IO) {
-                            DataStoreSingleton.saveLoginData(requireContext(), email, password)
-                        }
-                    }
+                    viewModel.registerUser(
+                        UserRequest(email, password),
+                        requireContext(),
+                        rememberCheckBox.isChecked
+                    )
                 }
             }
         }

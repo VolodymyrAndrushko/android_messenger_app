@@ -1,4 +1,4 @@
-package com.vandrushko.ui.utils
+package com.vandrushko.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -27,7 +27,7 @@ object DataStoreSingleton {
         return preferences[dataStoreKey]
     }
 
-    suspend fun saveLoginData(context: Context, email: String, password: String) {
+    suspend fun saveLoginData(context: Context,email: String, password: String) {
         saveStringData(
             context,
             Configs.EMAIL_KEY,
