@@ -12,6 +12,7 @@ import com.vandrushko.domain.repository.utils.JobState
 import com.vandrushko.ui.fragments.Configs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -56,6 +57,7 @@ class LoginViewModel @Inject constructor(
 //        response.data?.let { userDataBase.userDao().insetUserData(it) }
 //        response.data?.let { emit(it) }
 //        if ( )
+
         _userStateFlow.value = response.data?.let { JobState.Success(it) } ?: JobState.Error(
             R.string.login_error)
     }
