@@ -10,7 +10,7 @@ import com.vandrushko.data.model.UserRequest
 import com.vandrushko.databinding.FragmentLoginBinding
 import com.vandrushko.ui.utils.BaseFragment
 import com.vandrushko.data.DataStoreSingleton
-import com.vandrushko.domain.repository.utils.JobState
+import com.vandrushko.ui.utils.JobState
 import com.vandrushko.ui.utils.ext.hide
 import com.vandrushko.ui.utils.ext.show
 import com.vandrushko.ui.utils.ext.showErrorSnackBar

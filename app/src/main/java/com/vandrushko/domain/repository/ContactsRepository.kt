@@ -5,7 +5,7 @@ import com.vandrushko.data.model.EditUser
 import com.vandrushko.data.model.UserRequest
 import com.vandrushko.data.model.UserResponse
 import com.vandrushko.data.model.UsersResponse
-import com.vandrushko.di.network.NetworkService
+import com.vandrushko.domain.di.network.NetworkService
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET

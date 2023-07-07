@@ -6,11 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.vandrushko.R
 import com.vandrushko.data.DataStoreSingleton
 import com.vandrushko.data.db.UserDataBase
-import com.vandrushko.data.db.entity.UserDataEntity
 import com.vandrushko.data.db.entity.UserResponseEntity
 import com.vandrushko.data.model.UserRequest
+import com.vandrushko.data.model.mapToUserDataEntity
 import com.vandrushko.domain.repository.ContactsRepository
-import com.vandrushko.domain.repository.utils.JobState
+import com.vandrushko.domain.repository.UserDataHolderRepository
+import com.vandrushko.ui.utils.JobState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val contactsRepository: ContactsRepository,
-    private val userDataBase: UserDataBase
+    private val userDataBase: UserDataBase,
+    private val userDataHolderRepository: UserDataHolderRepository
 ) : ViewModel() {
 
     private val _registerStateFlow = MutableStateFlow<JobState>(JobState.Empty)
@@ -40,27 +42,13 @@ class AuthViewModel @Inject constructor(
                         userDataBase.userDao().insetUserData(
                             UserResponseEntity(
                                 id,
-                                UserDataEntity(
-                                    email,
-                                    name,
-                                    phone,
-                                    address,
-                                    career,
-                                    birthday,
-                                    facebook,
-                                    instagram,
-                                    twitter,
-                                    linkedin,
-                                    image,
-                                    updatedAt,
-                                    createdAt,
-                                    id
-                                ),
+                                this.mapToUserDataEntity(),
                                 response.data.accessToken,
                                 response.data.refreshToken
                             )
                         )
                     }
+                    userDataHolderRepository.setUserData(response.data)
                     _registerStateFlow.value = JobState.Success(response.data)
 
                 } else {

@@ -1,4 +1,4 @@
-package com.vandrushko.domain.repository.utils
+package com.vandrushko.ui.utils
 
 import com.vandrushko.data.model.UserData
 

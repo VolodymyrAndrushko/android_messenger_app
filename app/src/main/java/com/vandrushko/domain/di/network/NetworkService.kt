@@ -1,4 +1,4 @@
-package com.vandrushko.di.network
+package com.vandrushko.domain.di.network
 
 import com.vandrushko.data.model.ContactRequest
 import com.vandrushko.data.model.EditUser

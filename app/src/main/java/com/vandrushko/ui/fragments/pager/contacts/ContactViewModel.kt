@@ -3,15 +3,22 @@ package com.vandrushko.ui.fragments.pager.contacts
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.vandrushko.data.LocalRepositoryData
 import com.vandrushko.data.model.Contact
+import com.vandrushko.data.model.Users
+import com.vandrushko.data.model.UsersResponse
 import com.vandrushko.domain.repository.ContactsRepository
+import com.vandrushko.domain.repository.UserDataHolderRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ContactViewModel @Inject constructor(
-    private val contactsRepository: ContactsRepository
+    private val contactsRepository: ContactsRepository,
+    private val userDataHolderRepository: UserDataHolderRepository
 ) : ViewModel() {
 
     private val _contactsList = MutableLiveData<List<Contact>>()
@@ -22,8 +29,28 @@ class ContactViewModel @Inject constructor(
     val selectedContactsList: LiveData<List<Pair<Contact,Int>>> = _selectedContactsList
 
     init {
-        _contactsList.postValue(LocalRepositoryData().getLocalContactsList())
+        viewModelScope.launch(Dispatchers.IO){
+            this@ContactViewModel._contactsList.postValue(getContactsList())
+        }
+//        _contactsList.postValue(emptyList())
+
         _selectedContactsList.postValue(emptyList())
+    }
+
+    private suspend fun getContactsList(): List<Contact> {
+//        return LocalRepositoryData().getLocalContactsList()
+
+//            val userData = userDataHolderRepository.getUserData()
+//            return contactsRepository.getUserContacts(
+//                userData.user.id.toString(),
+//                userData.accessToken)
+//        }
+        val userData = userDataHolderRepository.getUserData()
+        val userContacts = contactsRepository
+            .getUserContacts(userData.user.id.toString(),userData.accessToken)
+
+        return listOf()
+
     }
 
     fun deleteContact(contact: Contact): Boolean {

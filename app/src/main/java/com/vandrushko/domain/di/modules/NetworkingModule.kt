@@ -1,6 +1,6 @@
-package com.vandrushko.di.modules
+package com.vandrushko.domain.di.modules
 
-import com.vandrushko.di.network.NetworkService
+import com.vandrushko.domain.di.network.NetworkService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

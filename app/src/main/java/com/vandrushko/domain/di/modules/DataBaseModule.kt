@@ -1,4 +1,4 @@
-package com.vandrushko.di.modules
+package com.vandrushko.domain.di.modules
 
 import android.content.Context
 import androidx.room.Room

@@ -2,6 +2,7 @@ package com.vandrushko.data.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.vandrushko.data.db.entity.UserDataEntity
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -48,4 +49,23 @@ data class Contact(
     @SerializedName("id")
     val id        : Int
 ) : Parcelable{
+}
+
+fun Contact.mapToUserDataEntity(): UserDataEntity {
+    return UserDataEntity(
+        email = this.email,
+        name = this.name,
+        phone = this.phone,
+        address = this.address,
+        career = this.career,
+        birthday = this.birthday,
+        facebook = this.facebook,
+        instagram = this.instagram,
+        twitter = this.twitter,
+        linkedin = this.linkedin,
+        image = this.image,
+        updatedAt = this.updatedAt,
+        createdAt = this.createdAt,
+        id = this.id
+    )
 }
