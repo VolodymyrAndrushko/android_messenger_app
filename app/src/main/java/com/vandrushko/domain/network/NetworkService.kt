@@ -1,4 +1,4 @@
-package com.vandrushko.domain.di.network
+package com.vandrushko.domain.network
 
 import com.vandrushko.data.model.ContactRequest
 import com.vandrushko.data.model.EditUser
@@ -51,7 +51,7 @@ interface NetworkService {
     suspend fun deleteContact(
         @Path("userId") userId: String,
         @Header("Authorization") accessToken: String,
-        @Body contactRequest: ContactRequest,
+        @Path("contactId") contactId: String,
     ): UsersResponse
 
     @GET("users/{userId}/contacts")

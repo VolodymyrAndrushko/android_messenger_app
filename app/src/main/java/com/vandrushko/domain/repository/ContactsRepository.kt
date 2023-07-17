@@ -5,7 +5,7 @@ import com.vandrushko.data.model.EditUser
 import com.vandrushko.data.model.UserRequest
 import com.vandrushko.data.model.UserResponse
 import com.vandrushko.data.model.UsersResponse
-import com.vandrushko.domain.di.network.NetworkService
+import com.vandrushko.domain.network.NetworkService
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -18,56 +18,56 @@ import javax.inject.Inject
 class ContactsRepository @Inject constructor(
     private val networkService: NetworkService
 ){
-    suspend fun registerUser(@Body body: UserRequest): UserResponse {
+    suspend fun registerUser(body: UserRequest): UserResponse {
         return networkService.registerUser(body)
     }
 
-    suspend fun loginUser(@Body body: UserRequest): UserResponse {
+    suspend fun loginUser(body: UserRequest): UserResponse {
         return networkService.loginUser(body)
     }
 
-    suspend fun refreshToken(@Header("refreshToken") refreshToken: String?): UserResponse {
+    suspend fun refreshToken(refreshToken: String?): UserResponse {
         return networkService.refreshToken(refreshToken)
     }
     suspend fun getUser(
-        @Path("userId") userId: String,
-        @Header("Authorization") accessToken: String
+        userId: String,
+        accessToken: String
     ): UserResponse{
-        return networkService.getUser(userId, accessToken)
+        return networkService.getUser(userId, "Bearer $accessToken")
     }
 
     suspend fun editUser(
-        @Path("userId") userId: String,
-        @Header("Authorization") accessToken: String,
-        @Body body: EditUser
+        userId: String,
+        accessToken: String,
+        body: EditUser
     ): UserResponse {
-        return networkService.editUser(userId, accessToken, body)
+        return networkService.editUser(userId, "Bearer $accessToken", body)
     }
 
-    suspend fun getAllUsers(@Header("Authorization") accessToken: String): UsersResponse {
+    suspend fun getAllUsers(accessToken: String): UsersResponse {
         return networkService.getAllUsers(accessToken)
     }
 
     suspend fun addContact(
-        @Path("userId") userId: String,
-        @Header("Authorization") accessToken: String,
-        @Body contactRequest: ContactRequest
+        userId: String,
+        accessToken: String,
+        contactRequest: ContactRequest
     ): UsersResponse {
-        return networkService.addContact(userId, accessToken, contactRequest)
+        return networkService.addContact(userId, "Bearer $accessToken", contactRequest)
     }
 
     suspend fun deleteContact(
-        @Path("userId") userId: String,
-        @Header("Authorization") accessToken: String,
-        @Body contactRequest: ContactRequest,
+        userId: String,
+        accessToken: String,
+        contactId: String,
     ): UsersResponse {
-        return networkService.deleteContact(userId, accessToken, contactRequest)
+        return networkService.deleteContact(userId, "Bearer $accessToken", contactId)
     }
 
     suspend fun getUserContacts(
-        @Path("userId") userId: String,
-        @Header("Authorization") accessToken: String
+        userId: String,
+        accessToken: String
     ): UsersResponse {
-        return networkService.getUserContacts(userId, accessToken)
+        return networkService.getUserContacts(userId, "Bearer $accessToken")
     }
 }

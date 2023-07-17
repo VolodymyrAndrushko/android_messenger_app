@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class LoadingScreenFragment :
     BaseFragment<FragmentLoadingScreenBinding>(FragmentLoadingScreenBinding::inflate) {
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel: LoginScreenViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

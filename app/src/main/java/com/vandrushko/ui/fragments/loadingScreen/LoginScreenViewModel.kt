@@ -1,4 +1,4 @@
-package com.vandrushko.ui.fragments.login
+package com.vandrushko.ui.fragments.loadingScreen
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
@@ -11,17 +11,16 @@ import com.vandrushko.data.model.UserRequest
 import com.vandrushko.data.model.mapToUserDataEntity
 import com.vandrushko.domain.repository.ContactsRepository
 import com.vandrushko.domain.repository.UserDataHolderRepository
-import com.vandrushko.ui.utils.JobState
 import com.vandrushko.ui.fragments.Configs
+import com.vandrushko.ui.utils.JobState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
 @HiltViewModel
-class LoginViewModel @Inject constructor(
+class LoginScreenViewModel @Inject constructor(
     private val contactsRepository: ContactsRepository,
     private val userDataBase: UserDataBase,
     private val userDataHolderRepository: UserDataHolderRepository
@@ -30,13 +29,16 @@ class LoginViewModel @Inject constructor(
     private val _userStateFlow = MutableStateFlow<JobState>(JobState.Empty)
     val userStateFlow: StateFlow<JobState> = _userStateFlow
 
-    fun loginUser(body: UserRequest) = viewModelScope.launch(Dispatchers.IO) {
+    fun autoLoginAttempt(context: Context) = viewModelScope.launch(Dispatchers.IO) {
         _userStateFlow.value = JobState.Loading
         try {
-            login(body)
+            val email = DataStoreSingleton.readStringData(context, Configs.EMAIL_KEY)
+            val password = DataStoreSingleton.readStringData(context, Configs.PASSWORD_KEY)
+
+            login(UserRequest(email, password))
         } catch (e: Exception) {
             e.printStackTrace()
-            _userStateFlow.value = JobState.Error(R.string.login_error)
+            _userStateFlow.value = JobState.Error(R.string.autologin_error)
         }
     }
 
@@ -63,5 +65,6 @@ class LoginViewModel @Inject constructor(
                 R.string.login_error
             )
         }
+
     }
 }

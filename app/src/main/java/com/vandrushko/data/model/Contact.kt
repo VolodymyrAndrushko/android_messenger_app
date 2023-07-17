@@ -7,20 +7,23 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Contact(
-    @SerializedName("email")
-    val email: String? = null,
+    @SerializedName("id")
+    val id: Int,
 
     @SerializedName("name")
     val name: String? = null,
 
+    @SerializedName("email")
+    val email: String? = null,
+
     @SerializedName("phone")
     val phone: String? = null,
 
-    @SerializedName("address")
-    val address: String? = null,
-
     @SerializedName("career")
     val career: String? = null,
+
+    @SerializedName("address")
+    val address: String? = null,
 
     @SerializedName("birthday")
     val birthday: String? = null,
@@ -40,15 +43,12 @@ data class Contact(
     @SerializedName("image")
     val image: String? = null,
 
-    @SerializedName("updated_at")
-    val updatedAt: String? = null,
-
     @SerializedName("created_at")
     val createdAt: String? = null,
 
-    @SerializedName("id")
-    val id        : Int
-) : Parcelable{
+    @SerializedName("updated_at")
+    val updatedAt: String? = null,
+) : Parcelable {
 }
 
 fun Contact.mapToUserDataEntity(): UserDataEntity {

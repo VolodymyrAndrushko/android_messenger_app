@@ -4,10 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vandrushko.data.LocalRepositoryData
 import com.vandrushko.data.model.Contact
-import com.vandrushko.data.model.Users
-import com.vandrushko.data.model.UsersResponse
+import com.vandrushko.data.model.ContactRequest
+import com.vandrushko.data.model.UserData
 import com.vandrushko.domain.repository.ContactsRepository
 import com.vandrushko.domain.repository.UserDataHolderRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,38 +17,36 @@ import javax.inject.Inject
 @HiltViewModel
 class ContactViewModel @Inject constructor(
     private val contactsRepository: ContactsRepository,
-    private val userDataHolderRepository: UserDataHolderRepository
+    userDataHolderRepository: UserDataHolderRepository
 ) : ViewModel() {
 
     private val _contactsList = MutableLiveData<List<Contact>>()
     private val _selectedContactsList = MutableLiveData<List<Pair<Contact,Int>>>()
     private var isMultiselectModeActivated = MutableLiveData(false)
 
+    private val userData: UserData = userDataHolderRepository.getUserData()
+
     val contactsList: LiveData<List<Contact>> = _contactsList
     val selectedContactsList: LiveData<List<Pair<Contact,Int>>> = _selectedContactsList
 
     init {
         viewModelScope.launch(Dispatchers.IO){
-            this@ContactViewModel._contactsList.postValue(getContactsList())
-        }
-//        _contactsList.postValue(emptyList())
+            try{
+                this@ContactViewModel._contactsList.postValue(getUserContactsFromWeb())
 
+            }
+            catch (e: Exception){
+                e.printStackTrace()
+                this@ContactViewModel._contactsList.postValue(emptyList()) //TODO GET ELEMENTS FROM ROOM
+            }
+        }
         _selectedContactsList.postValue(emptyList())
     }
 
-    private suspend fun getContactsList(): List<Contact> {
-//        return LocalRepositoryData().getLocalContactsList()
-
-//            val userData = userDataHolderRepository.getUserData()
-//            return contactsRepository.getUserContacts(
-//                userData.user.id.toString(),
-//                userData.accessToken)
-//        }
-        val userData = userDataHolderRepository.getUserData()
+    private suspend fun getUserContactsFromWeb(): List<Contact> {
         val userContacts = contactsRepository
             .getUserContacts(userData.user.id.toString(),userData.accessToken)
-
-        return listOf()
+        return userContacts.data.contacts
 
     }
 
@@ -59,9 +56,24 @@ class ContactViewModel @Inject constructor(
             val currentContacts = list.value.orEmpty().toMutableList()
             currentContacts.remove(contact)
             list.value = currentContacts
+            deleteContactOnServer(contact.id)
             return true
         }
         return false
+    }
+
+    private fun deleteContactOnServer(deleteId: Int) {
+        viewModelScope.launch(Dispatchers.IO){
+            try {
+                contactsRepository.deleteContact(
+                    userData.user.id.toString(),
+                    userData.accessToken,
+                    deleteId.toString())
+            }
+            catch (e: Exception){
+                e.printStackTrace()
+            }
+        }
     }
 
     fun addContact(contact: Contact, position: Int) {
@@ -71,8 +83,22 @@ class ContactViewModel @Inject constructor(
             if (currentContacts.size < position)
                 currentContacts.add(contact)
             else currentContacts.add(position, contact)
-
+            addContactOnServer(contact.id)
             list.value = currentContacts
+        }
+    }
+
+    private fun addContactOnServer(addId: Int) {
+        viewModelScope.launch(Dispatchers.IO){
+            try {
+                contactsRepository.addContact(
+                    userData.user.id.toString(),
+                    userData.accessToken,
+                    ContactRequest(addId))
+            }
+            catch (e: Exception){
+                e.printStackTrace()
+            }
         }
     }
 

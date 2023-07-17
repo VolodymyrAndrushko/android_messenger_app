@@ -15,6 +15,8 @@ class PagerFragment :
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewPager.adapter = PagerFragmentAdapter(this)
+        binding.viewPager.offscreenPageLimit = 1
+
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = when (position) {
